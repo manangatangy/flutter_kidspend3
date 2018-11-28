@@ -11,6 +11,8 @@ void main() => runApp(MyApp());
 // https://sergiandreplace.com/flutter-animations-the-basics/
 // https://sergiandreplace.com/
 // https://www.didierboelens.com/
+// this shows how to make circular image
+// https://medium.com/@RayLiVerified/create-a-rounded-image-icon-with-ripple-effect-in-flutter-eb0f4a720b90
 
 
 class MyApp extends StatelessWidget {
@@ -35,58 +37,64 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class Menu {
-  final List<MenuItem> items;
-
-  Menu({
-    this.items,
-  });
-}
-
 class MenuItem {
   final String id;
   final String title;
-  final ImageIcon icon;
+  final ImageProvider imageProvider;
 
   MenuItem({
     this.id,
     this.title,
-    this.icon,
+    this.imageProvider,
   });
 }
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  final menu = Menu(
-    items: [
-      MenuItem(
-        id: 'person1',
-        title: 'First Person',
-        icon: ImageIcon(
-            AssetImage("assets/alogo_claire_white.png")
-        ),
-      ),
-      MenuItem(
-        id: 'person2',
-        title: 'First Person',
-        icon: ImageIcon(
-            AssetImage("assets/alogo_nina_white.png")
-        ),
-      ),
-      MenuItem(
-        id: 'person3',
-        title: 'First Person',
-        icon: ImageIcon(
-            AssetImage("assets/alogo_rachel_white.png")
-        ),
-      ),
-    ],
-  );
+  final List<MenuItem> menuItems = [
+//    MenuItem(
+//      id: 'person1',
+//      title: 'Angry Person',
+//      imageProvider: AssetImage("assets/alogo_claire_white.png"),
+//    ),
+//    MenuItem(
+//      id: 'person2',
+//      title: 'Sweet Person',
+//      imageProvider: AssetImage("assets/alogo_nina_white.png"),
+//    ),
+//    MenuItem(
+//      id: 'person3',
+//      title: 'Crazy Person',
+//      imageProvider: AssetImage("assets/alogo_rachel_white.png"),
+//    ),
+    MenuItem(
+      id: 'person4',
+      title: 'Hellfish',
+      imageProvider: AssetImage("assets/simpsons_hellfish.png"),
+    ),
+    MenuItem(
+      id: 'person5',
+      title: 'Snowball-V',
+      imageProvider: AssetImage("assets/simpsons_snowball_v.png"),
+    ),
+    MenuItem(
+      id: 'person6',
+      title: 'Homer-donut',
+      imageProvider: AssetImage("assets/simpsons_homer_donut.png"),
+    ),
+  ];
+
+
+  /*
+  assets/simpsons_homer_donut.png
+    - assets/simpsons_snowball_v.png
+    - assets/simpsons_hellfish.png
+   */
 
   Screen activeScreen = Screen(
     title: 'active-screen',
     background: new DecorationImage(
-      image: new AssetImage('assets/wood_bk.jpg'),
+      image: AssetImage('assets/wood_bk.jpg'),
       fit: BoxFit.cover,
     ),
     contentBuilder: (BuildContext context) {
@@ -101,20 +109,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return ZoomScaffold(
-      menuScreen: MenuScreen(),
+      leadingImageProvider: menuItems[0].imageProvider,
 
-
+      menuScreenBuilder:
+          (BuildContext context, MenuController menuController) => MenuScreen(
+            menuController: menuController,
+            menuItems: menuItems,
+          ),
 
       contentScreen: activeScreen,
 
-
-
-      //contentScreen: activeScreen,
-      leading: Image.asset(
-        'assets/alogo_claire_white.png',
-        fit: BoxFit.cover,
-        width: 60.0,
-      ),
+//      //contentScreen: activeScreen,
+//      leading: Image.asset(
+//        'assets/alogo_claire_white.png',
+//        fit: BoxFit.cover,
+//        width: 60.0,
+//      ),
     );
   }
 }
