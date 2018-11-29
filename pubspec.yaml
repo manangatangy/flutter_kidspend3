@@ -29,6 +29,9 @@ flutter:
     - assets/simpsons_hellfish.png
     - assets/dark_grunge_bk.jpg
     - assets/wood_bk.jpg
+    - assets/donut-bk.png
+    - assets/hellfish-bk.png
+    - assets/snowball-bk.png
 
   fonts:
      - family: mermaid

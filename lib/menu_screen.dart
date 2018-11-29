@@ -5,14 +5,23 @@ import 'package:flutter/widgets.dart';
 import 'package:kidspend3/main.dart';
 import 'package:kidspend3/zoom_scaffold.dart';
 
+final menuScreenKey = GlobalKey(debugLabel: 'MenuScreen');
+
 class MenuScreen extends StatefulWidget {
   final MenuController menuController;
   final List<MenuItem> menuItems;
+  final String selectedItemId;
+  final Function(String) onMenuItemSelected;
 
   MenuScreen({
     this.menuController,
     this.menuItems,
-  });
+    this.selectedItemId,
+    this.onMenuItemSelected,
+    // By providing a key to the ctor, we can then ask to fetch the
+    // state object associated with that key. This is allowed because
+    // no other widget may have this key.
+  }) : super(key: menuScreenKey);
 
   @override
   _MenuScreenState createState() => new _MenuScreenState();
@@ -20,8 +29,16 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
-   AnimationController titleAnimationController;
+  AnimationController titleAnimationController;
+  RenderBox selectedRenderBox;
 
+  void setSelectedRenderBox(newRenderBox) {
+    // This could prob be a setter and the field made private
+    // but I'm not sure we actually need to setState to change this
+    setState(() {
+      selectedRenderBox = newRenderBox;
+    });
+  }
   @override
   void initState() {
     super.initState();
@@ -40,6 +57,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (selectedRenderBox == null) {
+      print('Selected render box is null');
+    } else {
+      print('Selected render box has y position: ${selectedRenderBox.localToGlobal(const Offset(0.0, 0.0)).dy}');
+    }
+
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -132,6 +155,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                  (int index) =>
                  AnimatedMenuListItem(
                    menuState: menuController.state,
+                   isSelected: menuItems[index].id == widget.selectedItemId,
                    duration: Duration(
                      milliseconds: menuController.state == MenuState.closing
                          ? 200 : 600,
@@ -145,8 +169,9 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                    menuListItem: _MenuListItem(
                        title: menuItems[index].title,
                        imageProvider: menuItems[index].imageProvider,
-                       isSelected: false,
+                       isSelected: menuItems[index].id == widget.selectedItemId,
                        onTap: () {
+                         widget.onMenuItemSelected(menuItems[index].id);
                          menuController.close();
                        }
                    ),
@@ -171,11 +196,13 @@ class AnimatedMenuListItem extends ImplicitlyAnimatedWidget {
   // Also need to know if we're sliding up/down etc, and what the duration should be
   final MenuState menuState;
   final Duration duration;
+  final bool isSelected;
 
   AnimatedMenuListItem({
     this.menuState,
     this.menuListItem,
     this.duration,
+    this.isSelected,
     curve,
   }) : super(duration: duration, curve: curve);
 
@@ -191,6 +218,25 @@ class _AnimatedMenuListItemState extends AnimatedWidgetBaseState<AnimatedMenuLis
   // Animating two things
   Tween<double> _translation;
   Tween<double> _opacity;
+
+  // The render tree is a long-lived structure that performs the writes to
+  // the screen.  Cf. the widget tree which is short-lived.
+
+  updateSelectedRenderBox() {
+    // The context is a build context and it represents where in the
+    // render tree this list item it, so the context is different for
+    // every widget.  Most render objects are RenderBox
+
+    final renderBox = context.findRenderObject() as RenderBox;
+    if (renderBox != null && widget.isSelected) {
+      // may be null on the initial build pass.
+      // Where is local-topleft in the global screen
+//      print('My renderBox local: ${renderBox.localToGlobal(const Offset(0.0, 0.0))}');
+      // The following couples the listItem to the MenuScreen which in general
+      // is not a great idea.
+      (menuScreenKey.currentState as _MenuScreenState).selectedRenderBox = renderBox;
+    }
+  }
 
   @override
   void forEachTween(visitor) {
@@ -226,6 +272,8 @@ class _AnimatedMenuListItemState extends AnimatedWidgetBaseState<AnimatedMenuLis
 
   @override
   Widget build(BuildContext context) {
+    updateSelectedRenderBox();
+    
     return new Opacity(
       // Use the tweened value, evaluated from the base class animation.
         opacity: _opacity.evaluate(animation),
@@ -266,6 +314,7 @@ class _MenuListItem extends StatelessWidget {
         // Put the menu item in a full width contained so that the full width is clickable
         width: double.infinity,
         child: Padding(
+          // Don't forget to add the top/bottom to the leadingImage position
           padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
           child: Row(
             children: [

@@ -8,11 +8,13 @@ import 'package:kidspend3/menu_screen.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final ImageProvider leadingImageProvider;
+  final int leadingImageListIndex;
   final ZoomScaffoldBuilder menuScreenBuilder;
   final Screen contentScreen;
 
   ZoomScaffold({
     this.leadingImageProvider,
+    this.leadingImageListIndex,
     this.menuScreenBuilder,
     this.contentScreen,
   });
@@ -30,7 +32,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // the change before 0.3
   Curve scaleDownCurve = Interval(0.0, 0.3, curve: Curves.easeOut);
   Curve scaleUpCurve = Interval(0.0, 1.0, curve: Curves.easeOut);
-  Curve slideOutCurve = Interval(0.0, 1.0, curve: Curves.easeOut);
+  Curve slideOutCurve = Interval(0.0, 0.7, curve: Curves.easeOut);
   Curve slideInCurve = Interval(0.0, 1.0, curve: Curves.easeOut);
 
   @override
@@ -49,13 +51,20 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   createLeadingIcon() {
-    return GestureDetector(
-      onTap: () {
-        print('hihihi');
-        menuController.toggle();
-      },
-      child: spinZoomAndSlideLeading(widget.leadingImageProvider),
+    return spinZoomAndSlideLeadingImage(
+      widget.leadingImageProvider,
+      widget.leadingImageListIndex,
     );
+
+//    return GestureDetector(
+//      onTap: () {
+//        menuController.toggle();
+//      },
+//      child: spinZoomAndSlideLeadingImage(
+//        widget.leadingImageProvider,
+//        widget.leadingImageListIndex,
+//      ),
+//    );
   }
 
   createContentDisplay() {
@@ -73,7 +82,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
                   top: 40.0,
                   left: 160.0,
                   child: Text(
-                    'hello',
+                    widget.contentScreen.title,
                     style: TextStyle(
                       fontFamily: 'bebas-neue',
                       fontSize: 25.0,
@@ -112,7 +121,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     // Slides to the right, when opening menu
     // These animations are now curved
-    final slideAmount = 275.0 * slidePercent;
+    final slideAmount = 350.0 * slidePercent;
     final contentScale = 1.0 - (0.2 * scalePercent);
     final cornerRadius = 10.0 * menuController.percentOpen;
 
@@ -140,15 +149,17 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     );
   }
 
-  spinZoomAndSlideLeading(ImageProvider leadingImageProvider) {
+  spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
     // Spins and slides downwards when opening menu
     final closeSize = 50.0;
     final openSize = 100.0;       // from menu_screen.dart:123
 
-    final closeOffsetX = 0.0;     // Position in the app-bar
+    final closeOffsetX = 10.0;     // Position in the app-bar
     final openOffsetX = 20.0;     // from menu_screen.dart
-    final closeOffsetY = 20.0;    // Position in the app-bar
-    final openOffsetY = 150.0;    // TBD - from menu item number
+    final closeOffsetY = 30.0;    // Position in the app-bar
+    // TBD - from menu item number
+    // The 8.0 values are the padding top and bottom of list items
+    final openOffsetY = 208.0 + imageListIndex * (8.0 + 100.0 + 8.0);
 
     final imageSize = closeSize + (openSize - closeSize) * menuController.percentOpen;
 
@@ -165,11 +176,16 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
       )
         ..rotateZ(spinAngle),
       alignment: Alignment.center,
-      child: Image(
-        image: widget.leadingImageProvider,
-        fit: BoxFit.cover,
-        width: imageSize,
-        height: imageSize,
+      child: GestureDetector(
+        onTap: () {
+          menuController.toggle();
+        },
+        child: Image(
+          image: imageProvider,
+          fit: BoxFit.cover,
+          width: imageSize,
+          height: imageSize,
+        ),
       ),
     );
   }
