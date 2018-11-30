@@ -403,7 +403,10 @@ class _MenuListItem extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
           child: Row(
             children: [
-              Image(
+              isSelected ? Container(
+                width: 100.0,
+                height: 100.0,
+              ) : Image(
                 image: imageProvider,
                 fit: BoxFit.cover,
                 width: 100.0,
