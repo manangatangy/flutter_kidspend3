@@ -180,7 +180,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
      return Transform(
        transform: Matrix4.translationValues(0.0, 200.0, 0.0),
-       child: Column(
+       child: ListView(
          children: Iterable.generate(
              menuItems.length,
                  (int index) =>
@@ -194,8 +194,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                    curve: menuController.state == MenuState.closing
                        ? Curves.easeIn
                        : Interval(
-                       0.0 + index * 0.2,
-                       0.5 + index * 0.2,
+                       0.0 + (index < 3 ? index : 2) * 0.2,
+                       0.5 + (index < 3 ? index : 2) * 0.2,
                        curve: Curves.easeOut),
                    menuListItem: _MenuListItem(
                        title: menuItems[index].title,

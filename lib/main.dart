@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kidspend3/list.dart';
 import 'package:kidspend3/menu_screen.dart';
 import 'package:kidspend3/restaurant_screen.dart';
 import 'package:kidspend3/zoom_scaffold.dart';
 
 void main() => runApp(MyApp());
+//void main() => runApp(ListDemoApp());
 
 // via https://youtu.be/6CEjnCVdgRM?t=3013
 // https://stackoverflow.com/questions/50115416/get-height-of-a-widget-using-its-globalkey-in-flutter
@@ -57,6 +59,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   };
 
+  static final image1 = AssetImage("assets/simpsons_snowball_v.png");
+  static final image2 = AssetImage('assets/snowball-bk.png');
+
   final List<MenuItem> menuItems = [
 //    MenuItem(
 //      id: 'person1',
@@ -106,11 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
     MenuItem(
       id: 'person5',
       title: 'Snowball-V',
-      imageProvider: AssetImage("assets/simpsons_snowball_v.png"),
+      imageProvider: image1,
       contentScreen: Screen(
         title: 'Lisa & Snowball-V',
         background: new DecorationImage(
-          image: AssetImage('assets/snowball-bk.png'),
+          image: image2,
           fit: BoxFit.cover,
         ),
         contentBuilder: (BuildContext context) {
@@ -118,6 +123,60 @@ class _MyHomePageState extends State<MyHomePage> {
         },
       ),
     ),
+
+
+    MenuItem(
+      id: '1person5',
+      title: 'Snowball-V',
+      imageProvider: image1,
+      contentScreen: Screen(
+        title: 'Lisa & Snowball-V',
+        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+      ),
+    ),
+
+    MenuItem(
+      id: '2person5',
+      title: 'Snowball-V',
+      imageProvider: image1,
+      contentScreen: Screen(
+        title: 'Lisa & Snowball-V',
+        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+      ),
+    ),
+    MenuItem(
+      id: '3person5',
+      title: 'Snowball-V',
+      imageProvider: image1,
+      contentScreen: Screen(
+        title: 'Lisa & Snowball-V',
+        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+      ),
+    ),
+    MenuItem(
+      id: '4person5',
+      title: 'Snowball-V',
+      imageProvider: image1,
+      contentScreen: Screen(
+        title: 'Lisa & Snowball-V',
+        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+      ),
+    ),
+    MenuItem(
+      id: '5person5',
+      title: 'Snowball-V',
+      imageProvider: image1,
+      contentScreen: Screen(
+        title: 'Lisa & Snowball-V',
+        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+      ),
+    ),
+
   ];
 
   MenuItem findById(String id) =>
