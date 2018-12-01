@@ -1,6 +1,13 @@
 .DS_Store
 .dart_tool/
 .flutter-plugins
+
+.idea/codeStyles/
+.idea/libraries/
+.idea/workspace.xml
+.idea/vcs.xml
+.idea/
+
 .packages
 .pub/
 build/

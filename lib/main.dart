@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:kidspend3/list.dart';
+import 'package:kidspend3/menu.dart';
 import 'package:kidspend3/menu_screen.dart';
-import 'package:kidspend3/restaurant_screen.dart';
 import 'package:kidspend3/zoom_scaffold.dart';
 
 void main() => runApp(MyApp());
@@ -18,6 +17,7 @@ void main() => runApp(MyApp());
 
 
 class MyApp extends StatelessWidget {
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
+
   MyHomePage({Key key, this.title}) : super(key: key);
   final String title;
 
@@ -39,145 +40,8 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class MenuItem {
-  final String id;
-  final String title;
-  final ImageProvider imageProvider;
-  final Screen contentScreen;
-
-  MenuItem({
-    this.id,
-    this.title,
-    this.imageProvider,
-    this.contentScreen,
-  });
-}
-
 class _MyHomePageState extends State<MyHomePage> {
 
-  final Map<String, MenuItem> menuItems2 = {
-
-  };
-
-  static final image1 = AssetImage("assets/simpsons_snowball_v.png");
-  static final image2 = AssetImage('assets/snowball-bk.png');
-
-  final List<MenuItem> menuItems = [
-//    MenuItem(
-//      id: 'person1',
-//      title: 'Angry Person',
-//      imageProvider: AssetImage("assets/alogo_claire_white.png"),
-//    ),
-//    MenuItem(
-//      id: 'person2',
-//      title: 'Sweet Person',
-//      imageProvider: AssetImage("assets/alogo_nina_white.png"),
-//    ),
-//    MenuItem(
-//      id: 'person3',
-//      title: 'Crazy Person',
-//      imageProvider: AssetImage("assets/alogo_rachel_white.png"),
-//    ),
-    MenuItem(
-      id: 'person4',
-      title: 'Hellfish',
-      imageProvider: AssetImage("assets/simpsons_hellfish.png"),
-      contentScreen: Screen(
-        title: 'Hell Fish',
-        background: new DecorationImage(
-          image: AssetImage('assets/hellfish-bk.png'),
-          fit: BoxFit.cover,
-        ),
-        contentBuilder: (BuildContext context) {
-          return Center(child: Text('',),);
-        },
-      ),
-    ),
-    MenuItem(
-      id: 'person6',
-      title: 'Homer-donut',
-      imageProvider: AssetImage("assets/simpsons_homer_donut.png"),
-      contentScreen: Screen(
-        title: 'Donut list',
-        background: new DecorationImage(
-          image: AssetImage('assets/donut-bk.png'),
-          fit: BoxFit.cover,
-        ),
-        contentBuilder: (BuildContext context) {
-          return Center(child: Text('',),);
-        },
-      ),
-    ),
-    MenuItem(
-      id: 'person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(
-          image: image2,
-          fit: BoxFit.cover,
-        ),
-        contentBuilder: (BuildContext context) {
-          return Center(child: Text('',),);
-        },
-      ),
-    ),
-
-
-    MenuItem(
-      id: '1person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-      ),
-    ),
-
-    MenuItem(
-      id: '2person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-      ),
-    ),
-    MenuItem(
-      id: '3person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-      ),
-    ),
-    MenuItem(
-      id: '4person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-      ),
-    ),
-    MenuItem(
-      id: '5person5',
-      title: 'Snowball-V',
-      imageProvider: image1,
-      contentScreen: Screen(
-        title: 'Lisa & Snowball-V',
-        background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-        contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-      ),
-    ),
-
-  ];
 
   MenuItem findById(String id) =>
       menuItems.firstWhere(
@@ -241,13 +105,6 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
 
       contentScreen: findById(selectedItemId).contentScreen,
-
-//      //contentScreen: activeScreen,
-//      leading: Image.asset(
-//        'assets/alogo_claire_white.png',
-//        fit: BoxFit.cover,
-//        width: 60.0,
-//      ),
     );
   }
 }

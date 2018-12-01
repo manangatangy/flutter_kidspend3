@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:kidspend3/main.dart';
+import 'package:kidspend3/menu.dart';
 import 'package:kidspend3/zoom_scaffold.dart';
 
 final menuScreenKey = GlobalKey(debugLabel: 'MenuScreen');

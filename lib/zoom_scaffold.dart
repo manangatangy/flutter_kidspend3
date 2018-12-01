@@ -3,8 +3,6 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:kidspend3/menu_screen.dart';
-import 'package:kidspend3/menu_screen.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final ImageProvider leadingImageProvider;
