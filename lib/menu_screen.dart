@@ -179,6 +179,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
      // Use a transform to push the whole menu list down a bit
 
      return Transform(
+       // The origin here is below the system status bar
        transform: Matrix4.translationValues(0.0, 200.0, 0.0),
        child: ListView(
          children: Iterable.generate(
@@ -401,33 +402,33 @@ class _MenuListItem extends StatelessWidget {
         child: Padding(
           // Don't forget to add the top/bottom to the leadingImage position
           padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
-          child: Row(
-            children: [
-              isSelected ? Container(
-                width: 100.0,
-                height: 100.0,
-              ) : Image(
-                image: imageProvider,
-                fit: BoxFit.cover,
-                width: 100.0,
-                height: 100.0,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: isSelected ? Colors.red : Colors.white,
-                    fontSize: 25.0,
-                    fontFamily: 'bebas-neue',
-                    letterSpacing: 2.0,
+            child: Row(
+              children: [
+                isSelected ? Container(
+                  width: 100.0,
+                  height: 100.0,
+                ) : Image(
+                  image: imageProvider,
+                  fit: BoxFit.cover,
+                  width: 100.0,
+                  height: 100.0,
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                      color: isSelected ? Colors.red : Colors.white,
+                      fontSize: 25.0,
+                      fontFamily: 'bebas-neue',
+                      letterSpacing: 2.0,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
     );
   }
 }

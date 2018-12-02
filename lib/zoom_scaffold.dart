@@ -148,6 +148,8 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
+    // The origin here is from above the system status bar !
+    // This is 24.0 from the origin of the mane list
     // Spins and slides downwards when opening menu
     final closeSize = 50.0;
     final openSize = 100.0;       // from menu_screen.dart:123
@@ -157,7 +159,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final closeOffsetY = 30.0;    // Position in the app-bar
     // TBD - from menu item number
     // The 8.0 values are the padding top and bottom of list items
-    final openOffsetY = 208.0 + imageListIndex * (8.0 + 100.0 + 8.0);
+    final openOffsetY = 208.0 + 24.0 + imageListIndex * (8.0 + 100.0 + 8.0);
 
     final imageSize = closeSize + (openSize - closeSize) * menuController.percentOpen;
 
