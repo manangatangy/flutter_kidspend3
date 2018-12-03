@@ -28,20 +28,20 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
-
 //  ScrollController _scrollController = new ScrollController();
   AnimationController titleAnimationController;
   double selectorYTop = 250.0;
   double selectorYBottom = 300.0;
+
 //  RenderBox selectedRenderBox;
 
-  setSelectedRenderBox(RenderBox newRenderBox)  {
+  setSelectedRenderBox(RenderBox newRenderBox) {
     final newYTop = newRenderBox.localToGlobal(const Offset(0.0, 0.0)).dy;
     final newYBottom = newYTop + newRenderBox.size.height;
     if (newYTop != selectorYTop) {
 //      setState(() {
-        selectorYTop = newYTop;
-        selectorYBottom = newYBottom;
+      selectorYTop = newYTop;
+      selectorYBottom = newYBottom;
 //      });
     }
   }
@@ -52,7 +52,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     titleAnimationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 250),
-
     );
   }
 
@@ -68,20 +67,22 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 //    print('selectorYBottom is: $selectorYBottom');
 
     var shouldRenderSelector = true;
+    // selectorYTop and selectorYBottom are the open-state values.
     var actualSelectorYTop = selectorYTop;
     var actualSelectorYBottom = selectorYBottom;
     var selectorOpacity = 1.0;
 
-    if (widget.menuController.state == MenuState.closed
-        || widget.menuController.state == MenuState.closing
-        || selectorYTop == null) {
+    if (widget.menuController.state == MenuState.closed ||
+        widget.menuController.state == MenuState.closing ||
+        selectorYTop == null) {
       // The selector should sit at the bottom, when menu is closed.
-      final RenderBox menuScreenRenderBox = context.findRenderObject() as RenderBox;
+      final RenderBox menuScreenRenderBox =
+          context.findRenderObject() as RenderBox;
       if (menuScreenRenderBox != null) {
         final menuScreenHeight = menuScreenRenderBox.size.height;
         actualSelectorYBottom = menuScreenHeight;
-        actualSelectorYTop = menuScreenHeight - 50.0;
-        selectorOpacity = 0.0;
+        actualSelectorYTop = menuScreenHeight - 0.0;
+        selectorOpacity = 0.5;
       } else {
         shouldRenderSelector = false;
         // Don't render since we're not measured yet.
@@ -106,11 +107,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           children: [
             createMenuTitle(widget.menuController),
             createMenuItems(widget.menuController, widget.menuItems),
-            shouldRenderSelector ? ItemSelector(
-              topY: actualSelectorYTop,
-              bottomY: actualSelectorYBottom,
-              opacity: selectorOpacity,
-            ) : Container(),
+            shouldRenderSelector
+                ? ItemSelector(
+                    topY: actualSelectorYTop,
+                    bottomY: actualSelectorYBottom,
+                    opacity: selectorOpacity,
+                  )
+                : Container(),
           ],
         ),
       ),
@@ -125,8 +128,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         break;
       case MenuState.closed:
       case MenuState.closing:
-      titleAnimationController.reverse();
-      break;
+        titleAnimationController.reverse();
+        break;
     }
 
     // Instead of returning the built widget, return a builder.
@@ -168,19 +171,25 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
               0.0,
             ),
             child: Transform.rotate(
-              angle: pi/2.0,
+              angle: pi / 2.0,
               child: child,
             ),
           );
-        }
-    );
+        });
+  }
+
+  Interval incrementedInterval(int index, double incr) {
+    var begin = 0.3 + index * incr;
+    var end = begin + 0.2;
+    return Interval(begin, end > 1.0 ? 1.0 : end, curve: Curves.easeOut);
   }
 
   createMenuItems(MenuController menuController, List<MenuItem> menuItems) {
-    // Use a transform to push the whole menu list down a bit
+    // Use a transform to push the whole menu list sideways a bit
+    final incr = 0.5 / menuItems.length;
     return Padding(
       // The origin here is below the system status bar
-      padding: EdgeInsets.only(top:200.0),
+      padding: EdgeInsets.only(top: 200.0),
       child: ListView(
         controller: widget.menuController.scrollController,
         children: Iterable.generate(
@@ -190,27 +199,23 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   menuState: menuController.state,
                   isSelected: menuItems[index].id == widget.selectedItemId,
                   duration: Duration(
-                    milliseconds: menuController.state == MenuState.closing
-                        ? 200 : 600,
+                    milliseconds: menuController.state == MenuState.closing ? 200 : 600,
                   ),
                   curve: menuController.state == MenuState.closing
                       ? Curves.easeIn
-                      : Interval(
-                      0.0 + (index < 3 ? index : 2) * 0.2,
-                      0.5 + (index < 3 ? index : 2) * 0.2,
-                      curve: Curves.easeOut),
+                      : incrementedInterval(index, incr),
                   menuListItem: _MenuListItem(
                       title: menuItems[index].title,
                       imageProvider: menuItems[index].imageProvider,
-                      isSelected: menuItems[index].id == widget.selectedItemId,
+                      isSelected:
+                      menuItems[index].id == widget.selectedItemId,
                       menuState: menuController.state,
                       onTap: () {
                         widget.onMenuItemSelected(menuItems[index].id);
                         menuController.close();
-                      }
-                  ),
-                )
-        ).toList(),
+                      }),
+                ))
+            .toList(),
       ),
     );
   }
@@ -236,7 +241,6 @@ class ItemSelector extends ImplicitlyAnimatedWidget {
 }
 
 class _ItemSelectorState extends AnimatedWidgetBaseState<ItemSelector> {
-
   Tween<double> _topY;
   Tween<double> _bottomY;
   Tween<double> _opacity;
@@ -244,13 +248,19 @@ class _ItemSelectorState extends AnimatedWidgetBaseState<ItemSelector> {
   @override
   void forEachTween(visitor) {
     _topY = visitor(
-      _topY, widget.topY, (dynamic value) => Tween<double>(begin: value),
+      _topY,
+      widget.topY,
+      (dynamic value) => Tween<double>(begin: value),
     );
     _bottomY = visitor(
-      _bottomY, widget.bottomY, (dynamic value) => Tween<double>(begin: value),
+      _bottomY,
+      widget.bottomY,
+      (dynamic value) => Tween<double>(begin: value),
     );
     _opacity = visitor(
-      _opacity, widget.opacity, (dynamic value) => Tween<double>(begin: value),
+      _opacity,
+      widget.opacity,
+      (dynamic value) => Tween<double>(begin: value),
     );
   }
 
@@ -268,7 +278,6 @@ class _ItemSelectorState extends AnimatedWidgetBaseState<ItemSelector> {
       ),
     );
   }
-
 }
 
 // Now lets wrap each list item in an animator
@@ -280,8 +289,8 @@ class _ItemSelectorState extends AnimatedWidgetBaseState<ItemSelector> {
 // wrap a menuListItem
 
 class AnimatedMenuListItem extends ImplicitlyAnimatedWidget {
-
   final _MenuListItem menuListItem;
+
   // Also need to know if we're sliding up/down etc, and what the duration should be
   final MenuState menuState;
   final Duration duration;
@@ -299,8 +308,8 @@ class AnimatedMenuListItem extends ImplicitlyAnimatedWidget {
   _AnimatedMenuListItemState createState() => new _AnimatedMenuListItemState();
 }
 
-class _AnimatedMenuListItemState extends AnimatedWidgetBaseState<AnimatedMenuListItem> {
-
+class _AnimatedMenuListItemState
+    extends AnimatedWidgetBaseState<AnimatedMenuListItem> {
   final double closedSlidePosition = 200.0;
   final double openSlidePosition = 0.0;
 
@@ -322,7 +331,8 @@ class _AnimatedMenuListItemState extends AnimatedWidgetBaseState<AnimatedMenuLis
 //      print('My renderBox local: ${renderBox.localToGlobal(const Offset(0.0, 0.0))}');
       // The following couples the listItem to the MenuScreen which in general
       // is not a great idea.
-      (menuScreenKey.currentState as _MenuScreenState).setSelectedRenderBox(renderBox);
+      (menuScreenKey.currentState as _MenuScreenState)
+          .setSelectedRenderBox(renderBox);
     }
   }
 
@@ -361,21 +371,20 @@ class _AnimatedMenuListItemState extends AnimatedWidgetBaseState<AnimatedMenuLis
   @override
   Widget build(BuildContext context) {
     updateSelectedRenderBox();
-    
+
     return new Opacity(
       // Use the tweened value, evaluated from the base class animation.
-        opacity: _opacity.evaluate(animation),
+      opacity: _opacity.evaluate(animation),
       child: Transform(
         transform: Matrix4.translationValues(
-          0.0,
           _translation.evaluate(animation),
+          0.0,
           0.0,
         ),
         child: widget.menuListItem,
       ),
     );
   }
-
 }
 
 class _MenuListItem extends StatelessWidget {
@@ -411,15 +420,17 @@ class _MenuListItem extends StatelessWidget {
             children: [
               // For selected item, only show the image in the menu,
               // when the animation has stopped at open
-              !isSelected || menuState == MenuState.open ? Image(
-                image: imageProvider,
-                fit: BoxFit.cover,
-                width: 100.0,
-                height: 100.0,
-              ) : Container(
-                width: 100.0,
-                height: 100.0,
-              ),
+              !isSelected || menuState == MenuState.open
+                  ? Image(
+                      image: imageProvider,
+                      fit: BoxFit.cover,
+                      width: 100.0,
+                      height: 100.0,
+                    )
+                  : Container(
+                      width: 100.0,
+                      height: 100.0,
+                    ),
               Padding(
                 padding: const EdgeInsets.only(left: 20.0),
                 child: Text(
