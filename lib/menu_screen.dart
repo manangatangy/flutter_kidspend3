@@ -203,6 +203,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       title: menuItems[index].title,
                       imageProvider: menuItems[index].imageProvider,
                       isSelected: menuItems[index].id == widget.selectedItemId,
+                      menuState: menuController.state,
                       onTap: () {
                         widget.onMenuItemSelected(menuItems[index].id);
                         menuController.close();
@@ -382,12 +383,14 @@ class _MenuListItem extends StatelessWidget {
   final ImageProvider imageProvider;
   final bool isSelected;
   final Function() onTap;
+  final MenuState menuState;
 
   _MenuListItem({
     this.title,
     this.imageProvider,
     this.isSelected,
     this.onTap,
+    this.menuState,
   });
 
   @override
@@ -404,30 +407,35 @@ class _MenuListItem extends StatelessWidget {
         child: Padding(
           // Don't forget to add the top/bottom to the leadingImage position
           padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
-            child: Row(
-              children: [
-                Image(
-                  image: imageProvider,
-                  fit: BoxFit.cover,
-                  width: 100.0,
-                  height: 100.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    title,
-                    style: TextStyle(
-                      color: isSelected ? Colors.red : Colors.white,
-                      fontSize: 25.0,
-                      fontFamily: 'bebas-neue',
-                      letterSpacing: 2.0,
-                    ),
+          child: Row(
+            children: [
+              // For selected item, only show the image in the menu,
+              // when the animation has stopped at open
+              !isSelected || menuState == MenuState.open ? Image(
+                image: imageProvider,
+                fit: BoxFit.cover,
+                width: 100.0,
+                height: 100.0,
+              ) : Container(
+                width: 100.0,
+                height: 100.0,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    color: isSelected ? Colors.red : Colors.white,
+                    fontSize: 25.0,
+                    fontFamily: 'bebas-neue',
+                    letterSpacing: 2.0,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
+      ),
     );
   }
 }
