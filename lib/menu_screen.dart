@@ -66,14 +66,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 //    print('selectorYTop is: $selectorYTop');
 //    print('selectorYBottom is: $selectorYBottom');
 
-    var shouldRenderSelector = true;
+    var shouldRenderSelector = false;
     // selectorYTop and selectorYBottom are the open-state values.
     var actualSelectorYTop = selectorYTop;
     var actualSelectorYBottom = selectorYBottom;
     var selectorOpacity = 1.0;
 
-    if (widget.menuController.state == MenuState.closed ||
-        widget.menuController.state == MenuState.closing ||
+    if (widget.menuController.state != MenuState.open ||
         selectorYTop == null) {
       // The selector should sit at the bottom, when menu is closed.
       final RenderBox menuScreenRenderBox =
@@ -413,38 +412,44 @@ class _MenuListItem extends StatelessWidget {
       child: Container(
         // Put the menu item in a full width contained so that the full width is clickable
         width: double.infinity,
-        child: Padding(
-          // Don't forget to add the top/bottom to the leadingImage position
-          padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
-          child: Row(
-            children: [
-              // For selected item, only show the image in the menu,
-              // when the animation has stopped at open
-              !isSelected || menuState == MenuState.open
-                  ? Image(
-                      image: imageProvider,
-                      fit: BoxFit.cover,
-                      width: 100.0,
-                      height: 100.0,
-                    )
-                  : Container(
-                      width: 100.0,
-                      height: 100.0,
-                    ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: isSelected ? Colors.red : Colors.white,
-                    fontSize: 25.0,
-                    fontFamily: 'bebas-neue',
-                    letterSpacing: 2.0,
-                  ),
+        child: Row(
+          children: [
+            Container(
+              width: 5.0,
+              height: 100.0 + 8.0 + 8.0,
+              // The selection indicator is shown if the item is selected and
+              // the menu state is fully open (ie, animation has stopped).
+              color: isSelected && menuState == MenuState.open
+                  ? Colors.red
+                  : Colors.transparent,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 8.0),
+              // The image is show either if the item is not selected or it
+              // the menu state is fully open (ie, animated has stopped).
+              child: !isSelected || menuState == MenuState.open ? Image(
+                image: imageProvider,
+                fit: BoxFit.cover,
+                width: 100.0,
+                height: 100.0,
+              ) : Container(
+                width: 100.0,
+                height: 100.0,
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: isSelected ? Colors.red : Colors.white,
+                  fontSize: 25.0,
+                  fontFamily: 'bebas-neue',
+                  letterSpacing: 2.0,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
