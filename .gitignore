@@ -6,11 +6,13 @@
 .idea/libraries/
 .idea/workspace.xml
 .idea/vcs.xml
+.idea/misc.xml
 .idea/
 
 .packages
 .pub/
 build/
+local.properties
 
 ios/.generated/
 packages
