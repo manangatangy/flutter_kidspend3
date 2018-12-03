@@ -29,6 +29,7 @@ class MenuScreen extends StatefulWidget {
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
+//  ScrollController _scrollController = new ScrollController();
   AnimationController titleAnimationController;
   double selectorYTop = 250.0;
   double selectorYBottom = 300.0;
@@ -63,8 +64,8 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    print('selectorYTop is: $selectorYTop');
-    print('selectorYBottom is: $selectorYBottom');
+//    print('selectorYTop is: $selectorYTop');
+//    print('selectorYBottom is: $selectorYBottom');
 
     var shouldRenderSelector = true;
     var actualSelectorYTop = selectorYTop;
@@ -175,43 +176,43 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     );
   }
 
-   createMenuItems(MenuController menuController, List<MenuItem> menuItems) {
-     // Use a transform to push the whole menu list down a bit
-
-     return Transform(
-       // The origin here is below the system status bar
-       transform: Matrix4.translationValues(0.0, 200.0, 0.0),
-       child: ListView(
-         children: Iterable.generate(
-             menuItems.length,
-                 (int index) =>
-                 AnimatedMenuListItem(
-                   menuState: menuController.state,
-                   isSelected: menuItems[index].id == widget.selectedItemId,
-                   duration: Duration(
-                     milliseconds: menuController.state == MenuState.closing
-                         ? 200 : 600,
-                   ),
-                   curve: menuController.state == MenuState.closing
-                       ? Curves.easeIn
-                       : Interval(
-                       0.0 + (index < 3 ? index : 2) * 0.2,
-                       0.5 + (index < 3 ? index : 2) * 0.2,
-                       curve: Curves.easeOut),
-                   menuListItem: _MenuListItem(
-                       title: menuItems[index].title,
-                       imageProvider: menuItems[index].imageProvider,
-                       isSelected: menuItems[index].id == widget.selectedItemId,
-                       onTap: () {
-                         widget.onMenuItemSelected(menuItems[index].id);
-                         menuController.close();
-                       }
-                   ),
-                 )
-         ).toList(),
-       ),
-     );
-   }
+  createMenuItems(MenuController menuController, List<MenuItem> menuItems) {
+    // Use a transform to push the whole menu list down a bit
+    return Padding(
+      // The origin here is below the system status bar
+      padding: EdgeInsets.only(top:200.0),
+      child: ListView(
+        controller: widget.menuController.scrollController,
+        children: Iterable.generate(
+            menuItems.length,
+                (int index) =>
+                AnimatedMenuListItem(
+                  menuState: menuController.state,
+                  isSelected: menuItems[index].id == widget.selectedItemId,
+                  duration: Duration(
+                    milliseconds: menuController.state == MenuState.closing
+                        ? 200 : 600,
+                  ),
+                  curve: menuController.state == MenuState.closing
+                      ? Curves.easeIn
+                      : Interval(
+                      0.0 + (index < 3 ? index : 2) * 0.2,
+                      0.5 + (index < 3 ? index : 2) * 0.2,
+                      curve: Curves.easeOut),
+                  menuListItem: _MenuListItem(
+                      title: menuItems[index].title,
+                      imageProvider: menuItems[index].imageProvider,
+                      isSelected: menuItems[index].id == widget.selectedItemId,
+                      onTap: () {
+                        widget.onMenuItemSelected(menuItems[index].id);
+                        menuController.close();
+                      }
+                  ),
+                )
+        ).toList(),
+      ),
+    );
+  }
 }
 
 class ItemSelector extends ImplicitlyAnimatedWidget {
@@ -395,7 +396,8 @@ class _MenuListItem extends StatelessWidget {
       // The ink is drawn on the Material, which must therefore be in
       // front of the background image
       splashColor: Color(0x44000000),
-      onTap: isSelected ? null : onTap,
+//      onTap: isSelected ? null : onTap,     // Disallow click if already selected
+      onTap: onTap,
       child: Container(
         // Put the menu item in a full width contained so that the full width is clickable
         width: double.infinity,
@@ -404,10 +406,7 @@ class _MenuListItem extends StatelessWidget {
           padding: const EdgeInsets.only(left: 20.0, top: 8.0, bottom: 8.0),
             child: Row(
               children: [
-                isSelected ? Container(
-                  width: 100.0,
-                  height: 100.0,
-                ) : Image(
+                Image(
                   image: imageProvider,
                   fit: BoxFit.cover,
                   width: 100.0,

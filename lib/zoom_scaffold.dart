@@ -148,6 +148,9 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
+    final listOffsetY = menuController.scrollController.hasClients ? menuController.scrollController.offset : 0.0;
+//    print('imageListIndex is: $imageListIndex');
+
     // The origin here is from above the system status bar !
     // This is 24.0 from the origin of the mane list
     // Spins and slides downwards when opening menu
@@ -155,11 +158,13 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final openSize = 100.0;       // from menu_screen.dart:123
 
     final closeOffsetX = 10.0;     // Position in the app-bar
-    final openOffsetX = 20.0;     // from menu_screen.dart
+    final openOffsetX = 20.0;      // from menu_screen.dart
+    // Add an extra 25 above so I can see where it is (must also have isVis forced true below)
     final closeOffsetY = 30.0;    // Position in the app-bar
     // TBD - from menu item number
     // The 8.0 values are the padding top and bottom of list items
-    final openOffsetY = 208.0 + 24.0 + imageListIndex * (8.0 + 100.0 + 8.0);
+    final openOffsetY = 208.0 + 24.0 + imageListIndex * (8.0 + 100.0 + 8.0)
+        - listOffsetY;
 
     final imageSize = closeSize + (openSize - closeSize) * menuController.percentOpen;
 
@@ -168,7 +173,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final spinAngle = 2 * pi * menuController.percentOpen;
 
     // When closed, use un-transformed content.
-    return Transform(
+    // When open, widget is effectively gone
+    bool isVis = menuController.state != MenuState.open;
+//    isVis = true;   // Temp so I can see where it is
+    return isVis ? Transform(
       transform: Matrix4.translationValues(
           slideAmountX ,
           slideAmountY,
@@ -187,7 +195,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
           height: imageSize,
         ),
       ),
-    );
+    ) : Container();
   }
 
   @override
@@ -275,6 +283,8 @@ class MenuController extends ChangeNotifier {
   // this replaces the percentOpen field but we still need a getter for it
   final AnimationController _animationController;
   MenuState state = MenuState.closed;
+  // Used for menu list control
+  ScrollController scrollController = new ScrollController();
 
   MenuController({
     this.vsync,

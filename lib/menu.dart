@@ -15,120 +15,101 @@ class MenuItem {
   });
 }
 
-final image1 = AssetImage("assets/simpsons_snowball_v.png");
-final image2 = AssetImage('assets/snowball-bk.png');
+final image1 = AssetImage("assets/simpsons_hellfish.png");
+final image1Bk = AssetImage('assets/hellfish-bk.png');
+final image2 = AssetImage("assets/simpsons_homer_donut.png");
+final image2Bk = AssetImage('assets/donut-bk.png');
+final image3 = AssetImage("assets/simpsons_snowball_v.png");
+final image3Bk = AssetImage('assets/snowball-bk.png');
 
 final List<MenuItem> menuItems = [
-//    MenuItem(
-//      id: 'person1',
-//      title: 'Angry Person',
-//      imageProvider: AssetImage("assets/alogo_claire_white.png"),
-//    ),
-//    MenuItem(
-//      id: 'person2',
-//      title: 'Sweet Person',
-//      imageProvider: AssetImage("assets/alogo_nina_white.png"),
-//    ),
-//    MenuItem(
-//      id: 'person3',
-//      title: 'Crazy Person',
-//      imageProvider: AssetImage("assets/alogo_rachel_white.png"),
-//    ),
   MenuItem(
-    id: 'person4',
-    title: 'Hellfish',
-    imageProvider: AssetImage("assets/simpsons_hellfish.png"),
+    id: 'Hellfish-A',
+    title: 'Hellfish-A',
+    imageProvider: image1,
     contentScreen: Screen(
       title: 'Hell Fish',
-      background: new DecorationImage(
-        image: AssetImage('assets/hellfish-bk.png'),
-        fit: BoxFit.cover,
-      ),
-      contentBuilder: (BuildContext context) {
-        return Center(child: Text('',),);
-      },
+      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
   MenuItem(
-    id: 'person6',
-    title: 'Homer-donut',
-    imageProvider: AssetImage("assets/simpsons_homer_donut.png"),
+    id: 'Homer-A',
+    title: 'Homer-A',
+    imageProvider: image2,
     contentScreen: Screen(
       title: 'Donut list',
-      background: new DecorationImage(
-        image: AssetImage('assets/donut-bk.png'),
-        fit: BoxFit.cover,
-      ),
-      contentBuilder: (BuildContext context) {
-        return Center(child: Text('',),);
-      },
-    ),
-  ),
-  MenuItem(
-    id: 'person5',
-    title: 'Snowball-V',
-    imageProvider: image1,
-    contentScreen: Screen(
-      title: 'Lisa & Snowball-V',
-      background: new DecorationImage(
-        image: image2,
-        fit: BoxFit.cover,
-      ),
-      contentBuilder: (BuildContext context) {
-        return Center(child: Text('',),);
-      },
-    ),
-  ),
-
-
-  MenuItem(
-    id: '1person5',
-    title: 'Snowball-V',
-    imageProvider: image1,
-    contentScreen: Screen(
-      title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image2, fit: BoxFit.cover,),
-      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
-    ),
-  ),
-
-  MenuItem(
-    id: '2person5',
-    title: 'Snowball-V',
-    imageProvider: image1,
-    contentScreen: Screen(
-      title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
   MenuItem(
-    id: '3person5',
-    title: 'Snowball-V',
-    imageProvider: image1,
+    id: 'Snowball-A',
+    title: 'Snowball-A',
+    imageProvider: image3,
     contentScreen: Screen(
       title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
   MenuItem(
-    id: '4person5',
-    title: 'Snowball-V',
+    id: 'Hellfish-B',
+    title: 'Hellfish-B',
     imageProvider: image1,
     contentScreen: Screen(
-      title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+      title: 'Hell Fish',
+      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
   MenuItem(
-    id: '5person5',
-    title: 'Snowball-V',
-    imageProvider: image1,
+    id: 'Homer-B',
+    title: 'Homer-B',
+    imageProvider: image2,
+    contentScreen: Screen(
+      title: 'Donut list',
+      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Snowball-B',
+    title: 'Snowball-B',
+    imageProvider: image3,
     contentScreen: Screen(
       title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image2, fit: BoxFit.cover,),
+      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Hellfish-C',
+    title: 'Hellfish-C',
+    imageProvider: image1,
+    contentScreen: Screen(
+      title: 'Hell Fish',
+      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Homer-C',
+    title: 'Homer-C',
+    imageProvider: image2,
+    contentScreen: Screen(
+      title: 'Donut list',
+      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Snowball-C',
+    title: 'Snowball-C',
+    imageProvider: image3,
+    contentScreen: Screen(
+      title: 'Lisa & Snowball-V',
+      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),

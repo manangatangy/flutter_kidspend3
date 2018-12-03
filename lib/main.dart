@@ -83,7 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
     },
   );
 
-  var selectedItemId = 'person4';
+  var selectedItemId = 'Hellfish-A';
 //  var activeScreen = screen1;
 
   @override
@@ -98,7 +98,6 @@ class _MyHomePageState extends State<MyHomePage> {
             menuItems: menuItems,
             selectedItemId: selectedItemId,
             onMenuItemSelected: (String itemId) {
-              print('item selected: $itemId');
               // Update the selection
               setState(() => selectedItemId = itemId);
             },
