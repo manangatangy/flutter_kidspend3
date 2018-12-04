@@ -42,17 +42,10 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-
   MenuItem findById(String id) =>
       menuItems.firstWhere(
               (MenuItem menuItem) => (menuItem.id == id)
       );
-
-  /*
-  assets/simpsons_homer_donut.png
-    - assets/simpsons_snowball_v.png
-    - assets/simpsons_hellfish.png
-   */
 
   static final Screen screen1 = Screen(
     title: 'active-screen',
@@ -84,7 +77,6 @@ class _MyHomePageState extends State<MyHomePage> {
   );
 
   var selectedItemId = 'Hellfish-A';
-//  var activeScreen = screen1;
 
   @override
   Widget build(BuildContext context) {
@@ -95,16 +87,15 @@ class _MyHomePageState extends State<MyHomePage> {
           (BuildContext context, MenuController menuController) =>
           MenuScreen(
             menuController: menuController,
-            menuItems: menuItems,
             selectedItemId: selectedItemId,
             onMenuItemSelected: (String itemId) {
               // Update the selection
               setState(() => selectedItemId = itemId);
             },
+            menuItems: menuItems,
           ),
 
       contentScreen: findById(selectedItemId).contentScreen,
     );
   }
 }
-

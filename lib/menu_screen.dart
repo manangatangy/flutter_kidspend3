@@ -9,15 +9,15 @@ final menuScreenKey = GlobalKey(debugLabel: 'MenuScreen');
 
 class MenuScreen extends StatefulWidget {
   final MenuController menuController;
-  final List<MenuItem> menuItems;
   final String selectedItemId;
   final Function(String) onMenuItemSelected;
+  final List<MenuItem> menuItems;
 
   MenuScreen({
     this.menuController,
-    this.menuItems,
     this.selectedItemId,
     this.onMenuItemSelected,
+    this.menuItems,
     // By providing a key to the ctor, we can then ask to fetch the
     // state object associated with that key. This is allowed because
     // no other widget may have this key.
@@ -28,23 +28,7 @@ class MenuScreen extends StatefulWidget {
 }
 
 class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
-//  ScrollController _scrollController = new ScrollController();
   AnimationController titleAnimationController;
-  double selectorYTop = 250.0;
-  double selectorYBottom = 300.0;
-
-//  RenderBox selectedRenderBox;
-
-  setSelectedRenderBox(RenderBox newRenderBox) {
-    final newYTop = newRenderBox.localToGlobal(const Offset(0.0, 0.0)).dy;
-    final newYBottom = newYTop + newRenderBox.size.height;
-    if (newYTop != selectorYTop) {
-//      setState(() {
-      selectorYTop = newYTop;
-      selectorYBottom = newYBottom;
-//      });
-    }
-  }
 
   @override
   void initState() {
@@ -63,33 +47,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-//    print('selectorYTop is: $selectorYTop');
-//    print('selectorYBottom is: $selectorYBottom');
-
-    var shouldRenderSelector = false;
-    // selectorYTop and selectorYBottom are the open-state values.
-    var actualSelectorYTop = selectorYTop;
-    var actualSelectorYBottom = selectorYBottom;
-    var selectorOpacity = 1.0;
-
-    if (widget.menuController.state != MenuState.open ||
-        selectorYTop == null) {
-      // The selector should sit at the bottom, when menu is closed.
-      final RenderBox menuScreenRenderBox =
-          context.findRenderObject() as RenderBox;
-      if (menuScreenRenderBox != null) {
-        final menuScreenHeight = menuScreenRenderBox.size.height;
-        actualSelectorYBottom = menuScreenHeight;
-        actualSelectorYTop = menuScreenHeight - 0.0;
-        selectorOpacity = 0.5;
-      } else {
-        shouldRenderSelector = false;
-        // Don't render since we're not measured yet.
-      }
-    }
-    // Now we have the target values set to the target and we
-    // can tween them in the ItemSelector
-
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -106,13 +63,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           children: [
             createMenuTitle(widget.menuController),
             createMenuItems(widget.menuController, widget.menuItems),
-//            shouldRenderSelector
-//                ? ItemSelector(
-//                    topY: actualSelectorYTop,
-//                    bottomY: actualSelectorYBottom,
-//                    opacity: selectorOpacity,
-//                  )
-//                : Container(),
           ],
         ),
       ),
@@ -218,65 +168,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 }
 
-class ItemSelector extends ImplicitlyAnimatedWidget {
-  // We will animate the position and also the opacity.  This means there
-  // are three properties we need to receive.  This also means we need
-  // three tweens in the state.
-
-  final double topY;
-  final double bottomY;
-  final double opacity;
-
-  ItemSelector({
-    this.topY,
-    this.bottomY,
-    this.opacity,
-  }) : super(duration: Duration(milliseconds: 600));
-
-  @override
-  _ItemSelectorState createState() => new _ItemSelectorState();
-}
-
-class _ItemSelectorState extends AnimatedWidgetBaseState<ItemSelector> {
-  Tween<double> _topY;
-  Tween<double> _bottomY;
-  Tween<double> _opacity;
-
-  @override
-  void forEachTween(visitor) {
-    _topY = visitor(
-      _topY,
-      widget.topY,
-      (dynamic value) => Tween<double>(begin: value),
-    );
-    _bottomY = visitor(
-      _bottomY,
-      widget.bottomY,
-      (dynamic value) => Tween<double>(begin: value),
-    );
-    _opacity = visitor(
-      _opacity,
-      widget.opacity,
-      (dynamic value) => Tween<double>(begin: value),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      top: _topY.evaluate(animation),
-      child: Opacity(
-        opacity: _opacity.evaluate(animation),
-        child: new Container(
-          width: 5.0,
-          height: _bottomY.evaluate(animation) - _topY.evaluate(animation),
-          color: Colors.red,
-        ),
-      ),
-    );
-  }
-}
-
 // Now lets wrap each list item in an animator
 // Change 'extends StatefulWidget' to ImplicitlyAnimatedWidget and
 // also change 'extends State<' to AnimatedWidgetBaseState which requires
@@ -317,22 +208,6 @@ class _AnimatedMenuListItemState
   // The render tree is a long-lived structure that performs the writes to
   // the screen.  Cf. the widget tree which is short-lived.
 
-  updateSelectedRenderBox() {
-    // The context is a build context and it represents where in the
-    // render tree this list item it, so the context is different for
-    // every widget.  Most render objects are RenderBox
-    final renderBox = context.findRenderObject() as RenderBox;
-    if (renderBox != null && widget.isSelected) {
-      // may be null on the initial build pass.
-      // Where is local-topleft in the global screen
-//      print('My renderBox local: ${renderBox.localToGlobal(const Offset(0.0, 0.0))}');
-      // The following couples the listItem to the MenuScreen which in general
-      // is not a great idea.
-      (menuScreenKey.currentState as _MenuScreenState)
-          .setSelectedRenderBox(renderBox);
-    }
-  }
-
   @override
   void forEachTween(visitor) {
     var slideTarget, opacityTarget;
@@ -367,8 +242,6 @@ class _AnimatedMenuListItemState
 
   @override
   Widget build(BuildContext context) {
-    updateSelectedRenderBox();
-
     return Row(
       children: [
         Opacity(
@@ -378,7 +251,6 @@ class _AnimatedMenuListItemState
             height: 100.0 + 8.0 + 8.0,
             // The selection indicator is shown if the item is selected.
             color: widget.isSelected ? Colors.red : Colors.transparent,
-//            color: Colors.green,
           ),
         ),
         Transform(
@@ -422,19 +294,9 @@ class _MenuListItem extends StatelessWidget {
         // Put the menu item in a full width contained so that the full width is clickable
         // The width was previously double.infinity, however this conflicted with having a
         // parent Row for holding the selection-indicator, so reset with to screen width.
-//        width: double.infinity,
       width: screenWidth - 5.0,
         child: Row(
           children: [
-//            Container(
-//              width: 5.0,
-//              height: 100.0 + 8.0 + 8.0,
-//              // The selection indicator is shown if the item is selected and
-//              // the menu state is fully open (ie, animation has stopped).
-//              color: isSelected && menuState == MenuState.open
-//                  ? Colors.red
-//                  : Colors.transparent,
-//            ),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 8.0),
               // The image is show either if the item is not selected or it
