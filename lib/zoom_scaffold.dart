@@ -67,11 +67,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
   createContentDisplay() {
     return zoomAndSlideContent(
-//      widget.contentScreen,
-
-
         Container(
           decoration: BoxDecoration(
+            // The color isn't shown because the image is not transparent background :/
+            color: const Color(0xff8833b6),
             image: widget.contentScreen.background,
           ),
           child: Stack(

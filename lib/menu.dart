@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:kidspend3/zoom_scaffold.dart';
 
 class MenuItem {
@@ -21,6 +22,10 @@ final image2 = AssetImage("assets/simpsons_homer_donut.png");
 final image2Bk = AssetImage('assets/donut-bk.png');
 final image3 = AssetImage("assets/simpsons_snowball_v.png");
 final image3Bk = AssetImage('assets/snowball-bk.png');
+
+final image1x = AssetImage("assets/alogo_claire_white.png");
+final image2x = AssetImage("assets/alogo_nina_white.png");
+final image3x = AssetImage("assets/alogo_rachel_white.png");
 
 final List<MenuItem> menuItems = [
   MenuItem(
@@ -83,6 +88,47 @@ final List<MenuItem> menuItems = [
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
+
+  MenuItem(
+    id: 'Claire',
+    title: 'Claire',
+    imageProvider: image1x,
+    contentScreen: Screen(
+      title: 'Claire',
+      background: new DecorationImage(
+        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
+        image: image1Bk, fit: BoxFit.cover,
+      ),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Nina',
+    title: 'Nina',
+    imageProvider: image2x,
+    contentScreen: Screen(
+      title: 'Nina',
+      background: new DecorationImage(
+        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
+        image: image2Bk, fit: BoxFit.cover,
+      ),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+  MenuItem(
+    id: 'Rachel',
+    title: 'Rachel',
+    imageProvider: image3x,
+    contentScreen: Screen(
+      title: 'Rachel',
+      background: new DecorationImage(
+        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
+        image: image3Bk, fit: BoxFit.cover,
+      ),
+      contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
+    ),
+  ),
+
   MenuItem(
     id: 'Hellfish-C',
     title: 'Hellfish-C',
@@ -113,5 +159,4 @@ final List<MenuItem> menuItems = [
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
-
 ];
