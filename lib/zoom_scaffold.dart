@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -53,25 +52,20 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
       widget.leadingImageProvider,
       widget.leadingImageListIndex,
     );
-
-//    return GestureDetector(
-//      onTap: () {
-//        menuController.toggle();
-//      },
-//      child: spinZoomAndSlideLeadingImage(
-//        widget.leadingImageProvider,
-//        widget.leadingImageListIndex,
-//      ),
-//    );
   }
 
   createContentDisplay() {
     return zoomAndSlideContent(
         Container(
           decoration: BoxDecoration(
-            // The color isn't shown because the image is not transparent background :/
-            color: const Color(0xff8833b6),
-            image: widget.contentScreen.background,
+            image: DecorationImage(
+              image: widget.contentScreen.backgroundImage,
+              colorFilter: new ColorFilter.mode(
+                Colors.blue.withOpacity(0.7),
+                BlendMode.darken,
+              ),
+              fit: BoxFit.cover,
+            ),
           ),
           child: Stack(
             children: [
@@ -88,7 +82,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
               ),
               widget.contentScreen.contentBuilder(context),
             ],
-
           ),
         )
     );
@@ -148,7 +141,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
   spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
     final listOffsetY = menuController.scrollController.hasClients ? menuController.scrollController.offset : 0.0;
-//    print('imageListIndex is: $imageListIndex');
 
     // The origin here is from above the system status bar !
     // This is 24.0 from the origin of the mane list
@@ -174,7 +166,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     // When closed, use un-transformed content.
     // When open, widget is effectively gone
     bool isVis = menuController.state != MenuState.open;
-//    isVis = true;   // Temp so I can see where it is
     return isVis ? Transform(
       transform: Matrix4.translationValues(
           slideAmountX ,
@@ -220,7 +211,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
       ),
     );
   }
-
 }
 
 // This class allows the MenuScreen to 'know'it's in the ZoomScaffold
@@ -266,12 +256,12 @@ typedef Widget ZoomScaffoldBuilder(
 
 class Screen {
   final String title;
-  final DecorationImage background;
+  final AssetImage backgroundImage;
   final WidgetBuilder contentBuilder;
 
   Screen({
     this.title,
-    this.background,
+    this.backgroundImage,
     this.contentBuilder,
   });
 }

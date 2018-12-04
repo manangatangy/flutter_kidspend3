@@ -34,7 +34,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image1,
     contentScreen: Screen(
       title: 'Hell Fish',
-      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
+      backgroundImage: image1Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -44,7 +44,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image2,
     contentScreen: Screen(
       title: 'Donut list',
-      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
+      backgroundImage: image2Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -54,7 +54,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image3,
     contentScreen: Screen(
       title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
+      backgroundImage: image3Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -64,7 +64,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image1,
     contentScreen: Screen(
       title: 'Hell Fish',
-      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
+      backgroundImage: image1Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -74,7 +74,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image2,
     contentScreen: Screen(
       title: 'Donut list',
-      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
+      backgroundImage: image2Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -84,7 +84,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image3,
     contentScreen: Screen(
       title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
+      backgroundImage: image3Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -95,10 +95,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image1x,
     contentScreen: Screen(
       title: 'Claire',
-      background: new DecorationImage(
-        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
-        image: image1Bk, fit: BoxFit.cover,
-      ),
+      backgroundImage: image1Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -108,10 +105,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image2x,
     contentScreen: Screen(
       title: 'Nina',
-      background: new DecorationImage(
-        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
-        image: image2Bk, fit: BoxFit.cover,
-      ),
+      backgroundImage: image2Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -121,10 +115,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image3x,
     contentScreen: Screen(
       title: 'Rachel',
-      background: new DecorationImage(
-        colorFilter: ColorFilter.mode(Color(0xdd33dd33), BlendMode.hue),
-        image: image3Bk, fit: BoxFit.cover,
-      ),
+      backgroundImage: image3Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -135,7 +126,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image1,
     contentScreen: Screen(
       title: 'Hell Fish',
-      background: new DecorationImage(image: image1Bk, fit: BoxFit.cover,),
+      backgroundImage: image1Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -145,7 +136,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image2,
     contentScreen: Screen(
       title: 'Donut list',
-      background: new DecorationImage(image: image2Bk, fit: BoxFit.cover,),
+      backgroundImage: image2Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),
@@ -155,7 +146,7 @@ final List<MenuItem> menuItems = [
     imageProvider: image3,
     contentScreen: Screen(
       title: 'Lisa & Snowball-V',
-      background: new DecorationImage(image: image3Bk, fit: BoxFit.cover,),
+      backgroundImage: image3Bk,
       contentBuilder: (BuildContext context) {return Center(child: Text('',),);},
     ),
   ),

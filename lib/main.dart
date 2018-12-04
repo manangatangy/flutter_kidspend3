@@ -15,7 +15,6 @@ void main() => runApp(MyApp());
 // this shows how to make circular image
 // https://medium.com/@RayLiVerified/create-a-rounded-image-icon-with-ripple-effect-in-flutter-eb0f4a720b90
 
-
 class MyApp extends StatelessWidget {
 
   // This widget is the root of your application.
@@ -47,35 +46,6 @@ class _MyHomePageState extends State<MyHomePage> {
               (MenuItem menuItem) => (menuItem.id == id)
       );
 
-  static final Screen screen1 = Screen(
-    title: 'active-screen',
-    background: new DecorationImage(
-      image: AssetImage('assets/wood_bk.jpg'),
-      fit: BoxFit.cover,
-    ),
-    contentBuilder: (BuildContext context) {
-      return Center(
-        child: Text(
-          'SCREEN 1',
-        ),
-      );
-    },
-  );
-  static final Screen screen2 = Screen(
-    title: 'active-screen',
-    background: new DecorationImage(
-      image: AssetImage('assets/wood_bk.jpg'),
-      fit: BoxFit.cover,
-    ),
-    contentBuilder: (BuildContext context) {
-      return Center(
-        child: Text(
-          'SCREEN 2',
-        ),
-      );
-    },
-  );
-
   var selectedItemId = 'Hellfish-A';
 
   @override
@@ -94,7 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
             },
             menuItems: menuItems,
           ),
-
       contentScreen: findById(selectedItemId).contentScreen,
     );
   }
