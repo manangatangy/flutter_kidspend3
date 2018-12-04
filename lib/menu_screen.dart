@@ -106,13 +106,13 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
           children: [
             createMenuTitle(widget.menuController),
             createMenuItems(widget.menuController, widget.menuItems),
-            shouldRenderSelector
-                ? ItemSelector(
-                    topY: actualSelectorYTop,
-                    bottomY: actualSelectorYBottom,
-                    opacity: selectorOpacity,
-                  )
-                : Container(),
+//            shouldRenderSelector
+//                ? ItemSelector(
+//                    topY: actualSelectorYTop,
+//                    bottomY: actualSelectorYBottom,
+//                    opacity: selectorOpacity,
+//                  )
+//                : Container(),
           ],
         ),
       ),
@@ -184,7 +184,6 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
   }
 
   createMenuItems(MenuController menuController, List<MenuItem> menuItems) {
-    // Use a transform to push the whole menu list sideways a bit
     final incr = 0.5 / menuItems.length;
     return Padding(
       // The origin here is below the system status bar
@@ -206,8 +205,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                   menuListItem: _MenuListItem(
                       title: menuItems[index].title,
                       imageProvider: menuItems[index].imageProvider,
-                      isSelected:
-                      menuItems[index].id == widget.selectedItemId,
+                      isSelected: menuItems[index].id == widget.selectedItemId,
                       menuState: menuController.state,
                       onTap: () {
                         widget.onMenuItemSelected(menuItems[index].id);
@@ -371,17 +369,27 @@ class _AnimatedMenuListItemState
   Widget build(BuildContext context) {
     updateSelectedRenderBox();
 
-    return new Opacity(
-      // Use the tweened value, evaluated from the base class animation.
-      opacity: _opacity.evaluate(animation),
-      child: Transform(
-        transform: Matrix4.translationValues(
-          _translation.evaluate(animation),
-          0.0,
-          0.0,
+    return Row(
+      children: [
+        Opacity(
+          opacity: _opacity.evaluate(animation),
+          child: Container(
+            width: 5.0,
+            height: 100.0 + 8.0 + 8.0,
+            // The selection indicator is shown if the item is selected.
+            color: widget.isSelected ? Colors.red : Colors.transparent,
+//            color: Colors.green,
+          ),
         ),
-        child: widget.menuListItem,
-      ),
+        Transform(
+          transform: Matrix4.translationValues(
+            _translation.evaluate(animation),
+            0.0,
+            0.0,
+          ),
+          child: widget.menuListItem,
+        ),
+      ],
     );
   }
 }
@@ -403,6 +411,7 @@ class _MenuListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return InkWell(
       // The ink is drawn on the Material, which must therefore be in
       // front of the background image
@@ -411,18 +420,21 @@ class _MenuListItem extends StatelessWidget {
       onTap: onTap,
       child: Container(
         // Put the menu item in a full width contained so that the full width is clickable
-        width: double.infinity,
+        // The width was previously double.infinity, however this conflicted with having a
+        // parent Row for holding the selection-indicator, so reset with to screen width.
+//        width: double.infinity,
+      width: screenWidth - 5.0,
         child: Row(
           children: [
-            Container(
-              width: 5.0,
-              height: 100.0 + 8.0 + 8.0,
-              // The selection indicator is shown if the item is selected and
-              // the menu state is fully open (ie, animation has stopped).
-              color: isSelected && menuState == MenuState.open
-                  ? Colors.red
-                  : Colors.transparent,
-            ),
+//            Container(
+//              width: 5.0,
+//              height: 100.0 + 8.0 + 8.0,
+//              // The selection indicator is shown if the item is selected and
+//              // the menu state is fully open (ie, animation has stopped).
+//              color: isSelected && menuState == MenuState.open
+//                  ? Colors.red
+//                  : Colors.transparent,
+//            ),
             Padding(
               padding: const EdgeInsets.only(left: 15.0, top: 8.0, bottom: 8.0),
               // The image is show either if the item is not selected or it
