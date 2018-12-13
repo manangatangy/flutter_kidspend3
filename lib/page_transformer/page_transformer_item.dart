@@ -70,11 +70,6 @@ class PageItem extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            color: Colors.red,
-            width: 100,
-            height: 100,
-          ),
           translationText,
           titleText,
         ],

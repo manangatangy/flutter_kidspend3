@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:kidspend3/page_transformer/dots_indicator.dart';
 import 'package:meta/meta.dart';
 
 /// Ref: https://github.com/roughike/page-transformer
@@ -27,8 +28,6 @@ class PageVisibilityResolver {
     final double visiblePageFraction =
     _calculateVisiblePageFraction(pageIndex, pagePosition);
 
-    print('resolvePageVisibility(pageIndex:$pageIndex) => pagePosition:$pagePosition visiblePageFraction: $visiblePageFraction');
-
     return PageVisibility(
       visibleFraction: visiblePageFraction,
       pagePosition: pagePosition,
@@ -44,8 +43,6 @@ class PageVisibilityResolver {
   }
 
   double _calculatePagePosition(int index) {
-    // _viewPortFraction and _pageMetrics are null first time in?
-
     final double viewPortFraction = _viewPortFraction ?? 1.0;
     final double pageViewWidth =
         (_pageMetrics?.viewportDimension ?? 1.0) * viewPortFraction;
@@ -54,8 +51,14 @@ class PageVisibilityResolver {
     final double pagePosition = (pageX - scrollX) / pageViewWidth;
     final double safePagePosition = !pagePosition.isNaN ? pagePosition : 0.0;
 
-    print('    _calculatePagePosition(index:$index) => viewPortFraction:$viewPortFraction pageViewWidth:$pageViewWidth pageX:$pageX');
-
+    if (_viewPortFraction == null) {
+      // The first time the PageVisibilityResolver is used, and before
+      // there has been a ScrollNotification to the _PageTransformerState
+      // then the above calcs would return a value equal to index.
+      // This will only be the correct return value, when initialPage=0.
+      // Therefore, force correct return value, regardless of initialPage value.
+      return 0.0;
+    }
 
     if (safePagePosition > 1.0) {
       return 1.0;
@@ -104,9 +107,11 @@ class PageVisibility {
 class PageTransformer extends StatefulWidget {
   PageTransformer({
     @required this.pageViewBuilder,
+    @required this.itemCount,
   });
 
   final PageViewBuilder pageViewBuilder;
+  final int itemCount;
 
   @override
   _PageTransformerState createState() => _PageTransformerState();
@@ -132,7 +137,26 @@ class _PageTransformerState extends State<PageTransformer> {
           );
         });
       },
-      child: pageView,
+      child: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          pageView,
+          Positioned(
+            bottom: 40.0,
+            child: DotsIndicator(
+                controller: controller,
+                itemCount: widget.itemCount,
+                onDotSelected: (int page) {
+                  controller.animateToPage(
+                    page,
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.easeOut,
+                  );
+                }
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

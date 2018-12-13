@@ -101,6 +101,7 @@ class BackgroundPageTransformer extends StatelessWidget {
           },
         );
       },
+      itemCount: sceneList.scenes.length,
     );
   }
 }
