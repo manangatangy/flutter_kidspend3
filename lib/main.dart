@@ -1,70 +1,106 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kidspend3/menu.dart';
-import 'package:kidspend3/menu_screen.dart';
-import 'package:kidspend3/zoom_scaffold.dart';
+import 'package:kidspend3/page_transformer/page_transformer.dart';
+import 'package:kidspend3/page_transformer/page_transformer_item.dart';
+import 'package:kidspend3/scenes.dart';
 
-void main() => runApp(MyApp());
-//void main() => runApp(ListDemoApp());
-
-// via https://youtu.be/6CEjnCVdgRM?t=3013
-// https://stackoverflow.com/questions/50115416/get-height-of-a-widget-using-its-globalkey-in-flutter
-// https://sergiandreplace.com/flutter-animations-using-animationcontroller-and-introducing-tweens/
-// https://sergiandreplace.com/flutter-animations-the-basics/
-// https://sergiandreplace.com/
-// https://www.didierboelens.com/
-// this shows how to make circular image
-// https://medium.com/@RayLiVerified/create-a-rounded-image-icon-with-ripple-effect-in-flutter-eb0f4a720b90
+main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+      title: 'My App',
+      theme: ThemeData.light(),
+      home: MainList(
+        sceneList: russianSceneList,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MainList extends StatelessWidget {
 
-  MyHomePage({Key key, this.title}) : super(key: key);
-  final String title;
+  final SceneList sceneList;
 
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  MenuItem findById(String id) =>
-      menuItems.firstWhere(
-              (MenuItem menuItem) => (menuItem.id == id)
-      );
-
-  var selectedItemId = 'Hellfish-A';
+  MainList({
+    this.sceneList,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return ZoomScaffold(
-      leadingImageProvider: findById(selectedItemId).imageProvider,
-      leadingImageListIndex: menuItems.indexOf(findById(selectedItemId)),
-      menuScreenBuilder:
-          (BuildContext context, MenuController menuController) =>
-          MenuScreen(
-            menuController: menuController,
-            selectedItemId: selectedItemId,
-            onMenuItemSelected: (String itemId) {
-              // Update the selection
-              setState(() => selectedItemId = itemId);
-            },
-            menuItems: menuItems,
+    return Material(
+      child: CustomScrollView(
+        slivers: <Widget>[
+          SliverAppBar(
+            floating: false,
+            pinned: true,
+            automaticallyImplyLeading: false,
+            expandedHeight: 450.0,
+            flexibleSpace: FlexibleSpaceBar(
+              centerTitle: true,
+              title: Text(
+                'List of Items',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16.0,
+                ),
+              ),
+              background: BackgroundPageTransformer(
+                sceneList: sceneList,
+              ),
+//              background: Image.asset(
+//                imageAssetPaths[1],
+//                fit: BoxFit.cover,
+//              ),
+            ),
           ),
-      contentScreen: findById(selectedItemId).contentScreen,
+          SliverList(
+            delegate: new SliverChildListDelegate(
+              List.generate(50, (index) =>
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('item number $index'),
+                  )),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class BackgroundPageTransformer extends StatelessWidget {
+  final SceneList sceneList;
+
+  BackgroundPageTransformer({
+    this.sceneList,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return PageTransformer(
+      pageViewBuilder: (context, visibilityResolver) {
+        return PageView.builder(
+          controller: PageController(
+            viewportFraction: 0.85,
+            initialPage: sceneList.currentScene,
+          ),
+          onPageChanged: (int page) {
+            sceneList.currentScene = page;
+          },
+          itemCount: sceneList.scenes.length,
+          itemBuilder: (context, index) {
+            final pageVisibility = visibilityResolver.resolvePageVisibility(
+                index);
+
+            return PageItem(
+              sceneData: sceneList.scenes[index],
+              pageVisibility: pageVisibility,
+            );
+          },
+        );
+      },
     );
   }
 }

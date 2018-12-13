@@ -21,17 +21,46 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
-    - assets/alogo_claire_white.png
-    - assets/alogo_nina_white.png
-    - assets/alogo_rachel_white.png
-    - assets/simpsons_homer_donut.png
-    - assets/simpsons_snowball_v.png
-    - assets/simpsons_hellfish.png
-    - assets/dark_grunge_bk.jpg
-    - assets/wood_bk.jpg
-    - assets/donut-bk.png
-    - assets/hellfish-bk.png
-    - assets/snowball-bk.png
+    # under assets/scenes
+    - assets/arkhangelsk_1.png
+    - assets/bolshoi_theatre_moscow.png
+    - assets/chesme_church_st_petersburg.png
+    - assets/church_in_uglich.png
+    - assets/church_of_saviour_on_spilt_blood_1.png
+    - assets/church_of_saviour_on_spilt_blood_2.png
+    - assets/gagarin_monument_moscow.png
+    - assets/komsomolskaya_moscow_metro.png
+    - assets/lake_ladoga.png
+    - assets/mayakovskaya_metro_moscow.png
+    - assets/moscow_grocery_store.png
+    - assets/moscow_immaculate_conception.png
+    - assets/motherland_calls.png
+    - assets/motherland_calls_mamayev_kurgan.png
+    - assets/ostankino_tower_moscow.png
+    - assets/peter_paul_fortress_spire.png
+    - assets/peterhof_palace.png
+    - assets/qolsharif_mosque_kazan_tatarstan.png
+    - assets/resurrection_church_kremlin_rostov_veliky.png
+    - assets/rostov_citadel.jpg
+    - assets/scarlet_sails_st_petersburg.png
+    - assets/sevastopol_memorial_1.jpg
+    - assets/sevastopol_memorial_2.jpg
+    - assets/singer_building_home_of_books_spb_1.png
+    - assets/singer_building_home_of_books_spb_2.png
+    - assets/smolny_convent_st_petersburg.png
+    - assets/st_basils_cathedral_1.jpg
+    - assets/st_basils_cathedral_2.jpg
+    - assets/st_george_nykhas_uastyrdzhi_ossetia.png
+    - assets/st_petersburg_rooftop_angels.png
+    - assets/suzdal_church.png
+    - assets/tall_trees.png
+    - assets/transfiguration_church_kizhi_island_karelia.png
+    - assets/trinity_church_bellingshausen_antarctica.png
+    - assets/valaam_chapel.png
+    - assets/valaam_icon.png
+    - assets/valaam_monastery_1.png
+    - assets/valaam_monastery_2.png
+    - assets/vladivostok_trans_siberian_station.png
 
   fonts:
      - family: mermaid
