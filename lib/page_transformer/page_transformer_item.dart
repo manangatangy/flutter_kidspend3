@@ -24,7 +24,6 @@ class PageItem extends StatelessWidget {
         alignment: FractionalOffset.topLeft,
         transform: Matrix4.translationValues(
           xTranslation,
-//          0.0,
           0.0,
           0.0,
         ),
