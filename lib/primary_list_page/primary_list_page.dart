@@ -19,6 +19,7 @@ class PrimaryListPage extends StatelessWidget {
       child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
+            backgroundColor: Colors.grey,
             floating: false,
             pinned: true,
             automaticallyImplyLeading: false,
@@ -30,7 +31,7 @@ class PrimaryListPage extends StatelessWidget {
                   'List of Items',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 22.0,
+                    fontSize: 18.0,
                   ),
                 ),
               ),
