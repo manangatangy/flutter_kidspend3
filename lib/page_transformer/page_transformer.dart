@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:kidspend3/page_transformer/dots_indicator.dart';
 import 'package:meta/meta.dart';
 
 /// Ref: https://github.com/roughike/page-transformer

@@ -13,13 +13,19 @@ class PrimaryListPage extends StatelessWidget {
     this.sceneList,
   });
 
+  // Colors.cyan[200]
   @override
   Widget build(BuildContext context) {
     return Material(
       child: CustomScrollView(
         slivers: <Widget>[
           SliverAppBar(
-            backgroundColor: Colors.grey,
+            // Setting the backgroundColor here will overide that theme
+            // and be used in both expanded and collapsed state. However,
+            // if transparent is specified, the collapsed toolbar will
+            // ignore this and use a kind of grey color.  The expanded
+            // color is, however transparent.
+            backgroundColor: Colors.orangeAccent,
             floating: false,
             pinned: true,
             automaticallyImplyLeading: false,
@@ -35,8 +41,16 @@ class PrimaryListPage extends StatelessWidget {
                   ),
                 ),
               ),
-              background: BackgroundPageTransformer(
-                sceneList: sceneList,
+              background: Container(
+                // This color is only used in expanded state; the collapsed
+                // color is the normal appBar color; either from the theme
+                // or set in SliverAppBar.backgroundColor.  Note that if you
+                // set this color to transparent, then the normal appBar
+                // color will appear in expanded state.
+                color: Theme.of(context).canvasColor,
+                child: BackgroundPageTransformer(
+                  sceneList: sceneList,
+                ),
               ),
             ),
           ),

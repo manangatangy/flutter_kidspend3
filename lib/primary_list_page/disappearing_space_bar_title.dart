@@ -40,6 +40,12 @@ class DisappearingSpaceBarTitleState extends State<DisappearingSpaceBarTitle> {
     assert(fadeStart <= fadeEnd);
     final double opacity = Interval(fadeStart, fadeEnd).transform(t);
 
+    // This could be used to interpolate a color transition
+//    final Color c = ColorTween(
+//        begin: Colors.black,
+//        end: Colors.blue,
+//    ).transform(t);
+
     return Opacity(
         opacity: opacity,
         child: widget.child,
