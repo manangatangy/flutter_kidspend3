@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidspend3/primary_list_page/disappearing_space_bar_title.dart';
 import 'package:kidspend3/page_transformer/page_transformer.dart';
 import 'package:kidspend3/page_transformer/page_transformer_item.dart';
 import 'package:kidspend3/scenes.dart';
@@ -39,11 +40,13 @@ class MainList extends StatelessWidget {
             expandedHeight: 450.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Text(
-                'List of Items',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 16.0,
+              title: DisappearingSpaceBarTitle(
+                child: Text(
+                  'List of Items',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 22.0,
+                  ),
                 ),
               ),
               background: BackgroundPageTransformer(

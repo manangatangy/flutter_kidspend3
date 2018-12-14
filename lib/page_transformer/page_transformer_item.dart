@@ -90,7 +90,6 @@ class PageItem extends StatelessWidget {
 
     var imageOverlayGradient = DecoratedBox(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
         gradient: LinearGradient(
           begin: FractionalOffset.bottomCenter,
           end: FractionalOffset.topCenter,
