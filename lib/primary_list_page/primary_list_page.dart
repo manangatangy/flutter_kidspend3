@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:kidspend3/page_transformer/page_transformer.dart';
 import 'package:kidspend3/page_transformer/page_transformer_item.dart';
 import 'package:kidspend3/primary_list_page/disappearing_space_bar_title.dart';
+import 'package:kidspend3/primary_list_page/sticky_header.dart';
 import 'package:kidspend3/scenes.dart';
 
 class PrimaryListPage extends StatelessWidget {
@@ -47,16 +48,48 @@ class PrimaryListPage extends StatelessWidget {
                 // or set in SliverAppBar.backgroundColor.  Note that if you
                 // set this color to transparent, then the normal appBar
                 // color will appear in expanded state.
-                color: Theme.of(context).canvasColor,
+                color: Theme
+                    .of(context)
+                    .canvasColor,
                 child: BackgroundPageTransformer(
                   sceneList: sceneList,
                 ),
               ),
             ),
           ),
+//          StickyHeader(),
+
+//          SliverPersistentHeader(
+//            pinned: true,
+//            delegate: _SliverAppBarDelegate(
+//              minHeight: _kAppBarMinHeight,
+//              maxHeight: appBarMaxHeight,
+//            ),
+//          ),
+
           SliverList(
             delegate: new SliverChildListDelegate(
-              List.generate(50, (index) =>
+              List.generate(10, (index) =>
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('item number $index'),
+                  )),
+            ),
+          ),
+          StickyHeader(),
+          SliverList(
+            delegate: new SliverChildListDelegate(
+              List.generate(10, (index) =>
+                  Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Text('item number $index'),
+                  )),
+            ),
+          ),
+          StickyHeader(),
+          SliverList(
+            delegate: new SliverChildListDelegate(
+              List.generate(10, (index) =>
                   Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text('item number $index'),
