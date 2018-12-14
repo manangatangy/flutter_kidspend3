@@ -40,9 +40,9 @@ class PageItem extends StatelessWidget {
       child: Text(
         sceneData.translation,
         style: textTheme.caption.copyWith(
-          color: Colors.white70,
+          color: Colors.white54,
           fontWeight: FontWeight.bold,
-          letterSpacing: 2.0,
+          letterSpacing: 1.0,
           fontSize: 14.0,
         ),
         textAlign: TextAlign.center,
@@ -55,15 +55,18 @@ class PageItem extends StatelessWidget {
         padding: const EdgeInsets.only(top: 16.0),
         child: Text(
           sceneData.title,
-          style: textTheme.title
-              .copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+          style: textTheme.title.copyWith(
+            color: Colors.white70,
+            fontWeight: FontWeight.bold,
+            fontSize: 16.0,
+          ),
           textAlign: TextAlign.center,
         ),
       ),
     );
 
     return Positioned(
-      bottom: 56.0,
+      bottom: 24.0,
       left: 32.0,
       right: 32.0,
       child: Column(

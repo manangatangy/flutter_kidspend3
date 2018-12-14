@@ -137,26 +137,27 @@ class _PageTransformerState extends State<PageTransformer> {
           );
         });
       },
-      child: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          pageView,
-          Positioned(
-            bottom: 40.0,
-            child: DotsIndicator(
-                controller: controller,
-                itemCount: widget.itemCount,
-                onDotSelected: (int page) {
-                  controller.animateToPage(
-                    page,
-                    duration: Duration(milliseconds: 500),
-                    curve: Curves.easeOut,
-                  );
-                }
-            ),
-          ),
-        ],
-      ),
+      child: pageView,
+//      child: Stack(
+//        alignment: Alignment.center,
+//        children: <Widget>[
+//          pageView,
+//          Positioned(
+//            bottom: 40.0,
+//            child: DotsIndicator(
+//                controller: controller,
+//                itemCount: widget.itemCount,
+//                onDotSelected: (int page) {
+//                  controller.animateToPage(
+//                    page,
+//                    duration: Duration(milliseconds: 500),
+//                    curve: Curves.easeOut,
+//                  );
+//                }
+//            ),
+//          ),
+//        ],
+//      ),
     );
   }
 }
