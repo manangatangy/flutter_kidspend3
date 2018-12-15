@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 import 'package:kidspend3/page_transformer/page_transformer.dart';
 import 'package:kidspend3/page_transformer/page_transformer_item.dart';
 import 'package:kidspend3/primary_list_page/disappearing_space_bar_title.dart';
@@ -27,10 +28,15 @@ class PrimaryListPage extends StatelessWidget {
             // ignore this and use a kind of grey color.  The expanded
             // color is, however transparent.
             backgroundColor: Colors.orangeAccent,
+            // Setting floating to true causes header to re-expand
+            // when you scroll down, even if you haven’t reached
+            // the top of the list.  If you add both the snap parameter
+            // with the floating parameter, you can make the app bar fully
+            // snap back into view when you scroll down.
             floating: false,
             pinned: true,
             automaticallyImplyLeading: false,
-            expandedHeight: 450.0,
+            expandedHeight: 570.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: DisappearingSpaceBarTitle(
@@ -67,35 +73,25 @@ class PrimaryListPage extends StatelessWidget {
 //            ),
 //          ),
 
-          SliverList(
-            delegate: new SliverChildListDelegate(
-              List.generate(10, (index) =>
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('item number $index'),
-                  )),
-            ),
-          ),
-          StickyHeader(),
-          SliverList(
-            delegate: new SliverChildListDelegate(
-              List.generate(10, (index) =>
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('item number $index'),
-                  )),
-            ),
-          ),
-          StickyHeader(),
-          SliverList(
-            delegate: new SliverChildListDelegate(
-              List.generate(10, (index) =>
-                  Padding(
-                    padding: EdgeInsets.all(16.0),
-                    child: Text('item number $index'),
-                  )),
-            ),
-          ),
+          /*
+SliverList(
+    delegate: SliverChildBuilderDelegate((BuildContext context, int index) {
+      // To convert this infinite list to a list with three items,
+      // uncomment the following line:
+      // if (index > 3) return null;
+      return Container(color: getRandomColor(), height: 150.0);
+    },
+    // Or, uncomment the following line:
+    // childCount: 3,
+  ),
+);
+           */
+          makeListWithStickHeader('header 1', 5),
+          makeListWithStickHeader('header 2', 5),
+          makeListWithStickHeader('header 3', 5),
+          makeListWithStickHeader('header 4', 5),
+          makeListWithStickHeader('header 5', 5),
+          makeListWithStickHeader('header 6', 5),
         ],
       ),
     );
