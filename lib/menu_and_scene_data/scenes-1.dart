@@ -1,26 +1,4 @@
-import 'package:meta/meta.dart';
-
-class SceneList {
-  int currentScene;
-  final List<SceneData> scenes;
-
-  SceneList({
-    this.currentScene = 0,
-    @required this.scenes,
-  });
-}
-
-class SceneData {
-  final String title;
-  final String imageUrl;
-  final String translation;
-
-  SceneData({
-    this.title,
-    this.imageUrl,
-    this.translation,
-  });
-}
+import 'package:kidspend3/menu_and_scene_data/menu_data.dart';
 
 final russianSceneList = SceneList(
   currentScene: 0,

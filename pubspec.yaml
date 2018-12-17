@@ -61,6 +61,21 @@ flutter:
     - assets/valaam_monastery_1.png
     - assets/valaam_monastery_2.png
     - assets/vladivostok_trans_siberian_station.png
+    # under assets/scenes-2
+    - assets/buran.png
+    - assets/control.png
+    - assets/energia.png
+    - assets/ice-station.png
+    - assets/jurassic.png
+    - assets/marche-vers-la-lumiere.png
+    - assets/nostromo.png
+    - assets/the-walk.png
+    - assets/underground.png
+    - assets/underground-moon.png
+    # under assets/faces
+    - assets/face1-trans.png
+    - assets/face2-trans.png
+    - assets/face3-trans.png
 
   fonts:
      - family: mermaid

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kidspend3/primary_list_page/primary_list_page.dart';
-import 'package:kidspend3/scenes.dart';
+import 'package:kidspend3/menu_and_scene_data/scenes-1.dart';
 
 main() => runApp(MyApp());
 
