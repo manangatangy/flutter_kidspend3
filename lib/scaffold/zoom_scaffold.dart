@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final ImageProvider leadingImageProvider;
@@ -57,32 +58,33 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   createContentDisplay() {
     return zoomAndSlideContent(
         Container(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: widget.contentScreen.backgroundImage,
-              colorFilter: new ColorFilter.mode(
-                Colors.blue.withOpacity(0.7),
-                BlendMode.darken,
-              ),
-              fit: BoxFit.cover,
-            ),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                  top: 40.0,
-                  left: 160.0,
-                  child: Text(
-                    widget.contentScreen.title,
-                    style: TextStyle(
-                      fontFamily: 'bebas-neue',
-                      fontSize: 25.0,
-                    ),
-                  )
-              ),
-              widget.contentScreen.contentBuilder(context),
-            ],
-          ),
+          child: widget.contentScreen.contentBuilder(context),
+//          decoration: BoxDecoration(
+//            image: DecorationImage(
+//              image: widget.contentScreen.backgroundImage,
+//              colorFilter: new ColorFilter.mode(
+//                Colors.blue.withOpacity(0.7),
+//                BlendMode.darken,
+//              ),
+//              fit: BoxFit.cover,
+//            ),
+//          ),
+//          child: Stack(
+//            children: [
+//              Positioned(
+//                  top: 40.0,
+//                  left: 160.0,
+//                  child: Text(
+//                    widget.contentScreen.title,
+//                    style: TextStyle(
+//                      fontFamily: 'bebas-neue',
+//                      fontSize: 25.0,
+//                    ),
+//                  )
+//              ),
+//              widget.contentScreen.contentBuilder(context),
+//            ],
+//          ),
         )
     );
   }
@@ -253,18 +255,6 @@ typedef Widget ZoomScaffoldBuilder(
     BuildContext context,
     MenuController menuController,
     );
-
-class Screen {
-  final String title;
-  final AssetImage backgroundImage;
-  final WidgetBuilder contentBuilder;
-
-  Screen({
-    this.title,
-    this.backgroundImage,
-    this.contentBuilder,
-  });
-}
 
 class MenuController extends ChangeNotifier {
   final TickerProvider vsync;

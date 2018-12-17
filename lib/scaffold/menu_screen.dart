@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:kidspend3/menu_and_scene_data/menu_data.dart';
+import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 import 'package:kidspend3/scaffold/menu_title.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
 import 'package:kidspend3/scaffold/menu_list_item.dart';
@@ -9,15 +9,15 @@ final menuScreenKey = GlobalKey(debugLabel: 'MenuScreen');
 
 class MenuScreen extends StatefulWidget {
   final MenuController menuController;
-  final String selectedItemId;
+  final String selectedItemKey;
   final Function(String) onMenuItemSelected;
-  final List<MenuItem> menuItems;
+  final List<MapEntry<String, MenuItem>> menuEntries;
 
   MenuScreen({
     this.menuController,
-    this.selectedItemId,
+    this.selectedItemKey,
     this.onMenuItemSelected,
-    this.menuItems,
+    this.menuEntries,
     // By providing a key to the ctor, we can then ask to fetch the
     // state object associated with that key. This is allowed because
     // no other widget may have this key.
@@ -62,7 +62,7 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
         child: Stack(
           children: [
             createMenuTitle(widget.menuController),
-            createMenuItems(widget.menuController, widget.menuItems),
+            createMenuItems(widget.menuController, widget.menuEntries),
           ],
         ),
       ),
@@ -118,19 +118,25 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     return Interval(begin, end > 1.0 ? 1.0 : end, curve: Curves.easeOut);
   }
 
-  createMenuItems(MenuController menuController, List<MenuItem> menuItems) {
-    final incr = 0.5 / menuItems.length;
+  bool _isSelectedKey(String key) {
+    return key == widget.selectedItemKey;
+  }
+
+  createMenuItems(
+      MenuController menuController,
+      List<MapEntry<String, MenuItem>> menuEntries) {
+    final incr = 0.5 / menuEntries.length;
     return Padding(
       // The origin here is below the system status bar
       padding: EdgeInsets.only(top: 200.0),
       child: ListView(
         controller: widget.menuController.scrollController,
         children: Iterable.generate(
-            menuItems.length,
+            menuEntries.length,
                 (int index) =>
                 AnimatedMenuListItem(
                   menuState: menuController.state,
-                  isSelected: menuItems[index].id == widget.selectedItemId,
+                  isSelected: _isSelectedKey(menuEntries[index].key),
                   duration: Duration(
                     milliseconds: menuController.state == MenuState.closing ? 200 : 600,
                   ),
@@ -138,12 +144,12 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
                       ? Curves.easeIn
                       : incrementedInterval(index, incr),
                   menuListItem: MenuListItem(
-                      title: menuItems[index].title,
-                      imageProvider: menuItems[index].imageProvider,
-                      isSelected: menuItems[index].id == widget.selectedItemId,
+                      title: menuEntries[index].value.title,
+                      imageProvider: menuEntries[index].value.imageProvider,
+                      isSelected: _isSelectedKey(menuEntries[index].key),
                       menuState: menuController.state,
                       onTap: () {
-                        widget.onMenuItemSelected(menuItems[index].id);
+                        widget.onMenuItemSelected(menuEntries[index].key);
                         menuController.close();
                       }),
                 ))

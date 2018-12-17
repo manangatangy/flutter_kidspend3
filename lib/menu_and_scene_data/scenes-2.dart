@@ -1,4 +1,6 @@
-import 'package:kidspend3/menu_and_scene_data/menu_data.dart';
+import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
+
+// ref: https://www.davidderueda.com/explore/
 
 final deruedaSceneList = SceneList(
   currentScene: 0,

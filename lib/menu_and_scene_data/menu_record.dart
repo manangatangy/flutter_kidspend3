@@ -1,6 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kidspend3/menu_and_scene_data/scenes-1.dart';
-import 'package:kidspend3/menu_and_scene_data/scenes-2.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
 import 'package:meta/meta.dart';
 
@@ -26,35 +24,34 @@ class SceneList {
   });
 }
 
-class MenuItem {
-  final String id;    // deprecated
-  final String title;
-  final ImageProvider imageProvider;
-  final Screen contentScreen;   // deprecated
-  final SceneList sceneList;
+class Screen {
+//  final String title;
+//  final AssetImage backgroundImage;
+  final WidgetBuilder contentBuilder;
 
-  MenuItem({
-    this.id,
-    this.title,
-    this.imageProvider,
-    this.contentScreen,
-    this.sceneList,
+  Screen({
+//    this.title,
+//    this.backgroundImage,
+    this.contentBuilder,
   });
 }
 
-Map<String, MenuItem> menuItems = {
-  'person-key-1': MenuItem(
-    title: '',
-    imageProvider: null,
-    sceneList: russianSceneList,
-  ),
-  'person-key-2': MenuItem(
-    title: '',
-    imageProvider: null,
-    sceneList: deruedaSceneList,
-  ),
+class MenuItem {
+  // id is needed in _MenuScreenState.createMenuItems to check if the
+  // menu item is the selected one.  Must be equal to the menuItems.key
+//  final String id;
+  // Needed to locate the leadingImage in the menu list
+  final int menuIndex;
+  final String title;
+  final ImageProvider imageProvider;
+//  final SceneList sceneList;
+  final Screen contentScreen;   // deprecated
 
-};
-
-
-// deruedaSceneList
+  MenuItem({
+    this.title,
+    this.menuIndex,
+    this.imageProvider,
+    this.contentScreen,
+//    this.sceneList,
+  });
+}
