@@ -50,15 +50,15 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/dark_grunge_bk.jpg'),
-          fit: BoxFit.cover,
-        ),
-      ),
+//      decoration: BoxDecoration(
+//        image: DecorationImage(
+//          image: AssetImage('assets/dark_grunge_bk.jpg'),
+//          fit: BoxFit.cover,
+//        ),
+//      ),
       child: Material(
         // Background of material must be transparent so that the ink can be seen
-        color: Colors.transparent,
+        color: Colors.pink,
         child: Stack(
           children: [
             createMenuTitle(widget.menuController),

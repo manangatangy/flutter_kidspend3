@@ -30,9 +30,11 @@ class MyApp extends StatelessWidget {
         primaryColorLight: Color(0xffb4ffff),
         primaryColorDark: Color(0xff4bacb8),
       ),
-      home: PrimaryListPage(
-        sceneList: russianSceneList,
-      ),
+      home: MyHomePage(),
+
+//      home: PrimaryListPage(
+//        sceneList: russianSceneList,
+//      ),
     );
   }
 }
