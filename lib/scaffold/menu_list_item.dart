@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kidspend3/main.dart';
 import 'package:kidspend3/page_transformer/page_transformer_item.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
 import 'package:kidspend3/menu_and_scene_data/scenes-1.dart';
@@ -81,10 +82,10 @@ class _AnimatedMenuListItemState
         Opacity(
           opacity: _opacity.evaluate(animation),
           child: Container(
-            width: 5.0,
+            width: 10.0,
             height: 100.0 + 8.0 + 8.0,
             // The selection indicator is shown if the item is selected.
-            color: widget.isSelected ? Colors.red : Colors.transparent,
+            color: widget.isSelected ? greenSecondaryDark : Colors.transparent,
           ),
         ),
         Transform(
@@ -149,7 +150,7 @@ class MenuListItem extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: isSelected ? Colors.red : Colors.white,
+                  color: isSelected ? greenSecondaryDark : Colors.white,
                   fontSize: 25.0,
                   fontFamily: 'bebas-neue',
                   letterSpacing: 2.0,

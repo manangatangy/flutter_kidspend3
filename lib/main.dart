@@ -10,19 +10,20 @@ import 'package:kidspend3/menu_and_scene_data/scenes-2.dart';
 
 main() => runApp(MyApp());
 
+// Ref: https://material-ui.com/style/color/ with
+// primary: green A100
+// secondary: green A400
+final greenPrimaryDark = Color(0xff81ac8d);
+final greenPrimaryMedium = Color(0xffb9f6ca);
+final greenPrimaryLight = Color(0xffc7f7d4);
+final greenSecondaryDark = Color(0xff00a152);
+final greenSecondaryMedium = Color(0xff00e676);
+final greenSecondaryLight = Color(0xff33eb91);
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    // Ref: https://material-ui.com/style/color/ with
-    // primary: green A100
-    // secondary: green A400
-    final greenPrimaryDark = Color(0xff81ac8d);
-    final greenPrimaryMedium = Color(0xffb9f6ca);
-    final greenPrimaryLight = Color(0xffc7f7d4);
-    final greenSecondaryDark = Color(0xff00a152);
-    final greenSecondaryMedium = Color(0xff00e676);
-    final greenSecondaryLight = Color(0xff33eb91);
 
     // Ref: https://stackoverflow.com/a/51269484/1402287
     // This sets the status bar color.
@@ -48,6 +49,10 @@ class MyApp extends StatelessWidget {
       // Note however that simply wrapping the child in a SafeAre as described in
       // https://github.com/flutter/flutter/issues/4518#issuecomment-397117406
       // leaves the status bar black (although it did reserve space for it).
+      // Note that the actual status bar height if you need it, can be found from:
+      // ref: final double statusBarHeight = MediaQuery.of(context).padding.top;
+      // and it seems to 24.0
+
       home: SafeArea(
         child: MyHomePage(),
       ),

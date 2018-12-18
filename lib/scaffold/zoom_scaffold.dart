@@ -59,32 +59,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     return zoomAndSlideContent(
         Container(
           child: widget.contentScreen.contentBuilder(context),
-//          decoration: BoxDecoration(
-//            image: DecorationImage(
-//              image: widget.contentScreen.backgroundImage,
-//              colorFilter: new ColorFilter.mode(
-//                Colors.blue.withOpacity(0.7),
-//                BlendMode.darken,
-//              ),
-//              fit: BoxFit.cover,
-//            ),
-//          ),
-//          child: Stack(
-//            children: [
-//              Positioned(
-//                  top: 40.0,
-//                  left: 160.0,
-//                  child: Text(
-//                    widget.contentScreen.title,
-//                    style: TextStyle(
-//                      fontFamily: 'bebas-neue',
-//                      fontSize: 25.0,
-//                    ),
-//                  )
-//              ),
-//              widget.contentScreen.contentBuilder(context),
-//            ],
-//          ),
         )
     );
   }
@@ -144,19 +118,17 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
     final listOffsetY = menuController.scrollController.hasClients ? menuController.scrollController.offset : 0.0;
 
-    // The origin here is from above the system status bar !
-    // This is 24.0 from the origin of the mane list
+    // The origin here is from below the system status bar.
+    // This is the same as the origin of the main list
     // Spins and slides downwards when opening menu
     final closeSize = 50.0;
     final openSize = 100.0;       // from menu_screen.dart:123
 
-    final closeOffsetX = 10.0;     // Position in the app-bar
-    final openOffsetX = 20.0;      // from menu_screen.dart
-    // Add an extra 25 above so I can see where it is (must also have isVis forced true below)
-    final closeOffsetY = 30.0;    // Position in the app-bar
-    // TBD - from menu item number
+    final closeOffsetX = 10.0;    // Position in the app-bar
+    final openOffsetX = 25.0;     // from menu_screen.dart
+    final closeOffsetY = 4.0;     // Position in the app-bar
     // The 8.0 values are the padding top and bottom of list items
-    final openOffsetY = 208.0 + 24.0 + imageListIndex * (8.0 + 100.0 + 8.0)
+    final openOffsetY = 208.0 + imageListIndex * (8.0 + 100.0 + 8.0)
         - listOffsetY;
 
     final imageSize = closeSize + (openSize - closeSize) * menuController.percentOpen;
@@ -167,6 +139,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     // When closed, use un-transformed content.
     // When open, widget is effectively gone
+    // Force this flag true, to show overlapped images when open for debug
     bool isVis = menuController.state != MenuState.open;
     return isVis ? Transform(
       transform: Matrix4.translationValues(

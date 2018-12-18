@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kidspend3/main.dart';
 import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 import 'package:kidspend3/scaffold/menu_title.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
@@ -50,15 +51,10 @@ class _MenuScreenState extends State<MenuScreen> with TickerProviderStateMixin {
     return Container(
       width: double.infinity,
       height: double.infinity,
-//      decoration: BoxDecoration(
-//        image: DecorationImage(
-//          image: AssetImage('assets/dark_grunge_bk.jpg'),
-//          fit: BoxFit.cover,
-//        ),
-//      ),
+      // Could decorate here with a background image fit:cover
       child: Material(
         // Background of material must be transparent so that the ink can be seen
-        color: Colors.pink,
+        color: greenSecondaryLight,
         child: Stack(
           children: [
             createMenuTitle(widget.menuController),

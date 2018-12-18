@@ -67,7 +67,7 @@ class MenuTitle extends StatelessWidget {
           child: Text(
             'Menu',
             style: TextStyle(
-              color: Color(0x88444444),
+              color: Color(0x88c7f7d4),
               fontSize: 240.0,
               fontFamily: 'mermaid',
             ),
