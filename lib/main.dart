@@ -65,30 +65,24 @@ Map<String, MenuItem> _menuItems = {
     menuIndex: 0,
     title: 'Person 0',
     imageProvider: AssetImage("assets/face1-trans.png"),
-    contentScreen: Screen(
-      contentBuilder: (BuildContext context) => PrimaryListPage(
+    screenBuilder: (BuildContext context) => PrimaryListPage(
         sceneList: russianSceneList,
-      ),
     ),
   ),
   'person-key-1': MenuItem(
     menuIndex: 1,
     title: 'Person 1',
     imageProvider: AssetImage("assets/face2-trans.png"),
-    contentScreen: Screen(
-      contentBuilder: (BuildContext context) => PrimaryListPage(
+    screenBuilder: (BuildContext context) => PrimaryListPage(
         sceneList: deruedaSceneList,
       ),
-    ),
   ),
   'person-key-2': MenuItem(
     menuIndex: 2,
     title: 'Person 2',
     imageProvider: AssetImage("assets/face3-trans.png"),
-    contentScreen: Screen(
-      contentBuilder: (BuildContext context) => PrimaryListPage(
+    screenBuilder: (BuildContext context) => PrimaryListPage(
         sceneList: deruedaSceneList,
-      ),
     ),
   ),
 };
@@ -110,13 +104,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    MenuItem _selectedMenuItem = _menuItems[_selectedMenuItemKey];
-
     return ZoomScaffold(
-      contentScreen: _selectedMenuItem.contentScreen,
-      leadingImageProvider: _selectedMenuItem.imageProvider,
-      leadingImageListIndex: _selectedMenuItem.menuIndex,
+      currentMenuItem: _menuItems[_selectedMenuItemKey],
       menuScreenBuilder:
           (BuildContext context, MenuController menuController) =>
           MenuScreen(

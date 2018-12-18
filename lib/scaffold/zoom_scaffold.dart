@@ -6,16 +6,12 @@ import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 import 'package:kidspend3/scaffold/zoom_image.dart';
 
 class ZoomScaffold extends StatefulWidget {
-  final ImageProvider leadingImageProvider;
-  final int leadingImageListIndex;
+  final MenuItem currentMenuItem;
   final ZoomScaffoldBuilder menuScreenBuilder;
-  final Screen contentScreen;
 
   ZoomScaffold({
-    this.leadingImageProvider,
-    this.leadingImageListIndex,
+    this.currentMenuItem,
     this.menuScreenBuilder,
-    this.contentScreen,
   });
 
   @override
@@ -45,19 +41,11 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     menuController = MenuController(
       vsync: this,
     )..addListener(() => setState(() {}));
-
-//    widget.contentScreen.headerExpansionChangeListener = (double percentHeaderExpanded) {
-//      setState(() {
-//        _percentHeaderExpanded = percentHeaderExpanded;
-//        print('_ZoomScaffoldState, _percentHeaderExpanded: $_percentHeaderExpanded');
-//      });
-//    };
   }
 
   @override
   void dispose() {
     menuController.dispose();   // deregister the listeners
-//    widget.contentScreen.headerExpansionChangeListener = null;
     super.dispose();
   }
 
@@ -73,8 +61,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     // https://stackoverflow.com/a/49967268/1402287
     return NotificationListener<HeaderChangeNotification>(
       onNotification: (HeaderChangeNotification headerChangeNotification) {
-        _collapsedFraction = headerChangeNotification.collapsedFraction;
         print('onHeaderChangeNotification collapsedFraction: $_collapsedFraction');
+//        setState(() {
+//          _collapsedFraction = headerChangeNotification.collapsedFraction;
+//        });
         return true;
       },
       child: ZoomScaffoldMenuController(
@@ -108,7 +98,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
       children: <Widget>[
         zoomAndSlideContent(
             Container(
-              child: widget.contentScreen.contentBuilder(context),
+              child: widget.currentMenuItem.screenBuilder(context),
             )
         ),
         Positioned(
@@ -121,10 +111,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   createLeadingIcon() {
-    return spinZoomAndSlideLeadingImage(
-      widget.leadingImageProvider,
-      widget.leadingImageListIndex,
-    );
+    return spinZoomAndSlideLeadingImage();
   }
 
   zoomAndSlideContent(Widget content) {
@@ -179,7 +166,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     );
   }
 
-  spinZoomAndSlideLeadingImage(ImageProvider imageProvider, int imageListIndex) {
+  spinZoomAndSlideLeadingImage() {
+    final _index = widget.currentMenuItem.menuIndex;
+    final _imageProvider = widget.currentMenuItem.imageProvider;
+
     final listOffsetY = menuController.scrollController.hasClients ? menuController.scrollController.offset : 0.0;
 
     // The origin here is from below the system status bar.
@@ -192,7 +182,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final openOffsetX = 25.0;     // from menu_screen.dart
     final closeOffsetY = 4.0;     // Position in the app-bar
     // The 8.0 values are the padding top and bottom of list items
-    final openOffsetY = 208.0 + imageListIndex * (8.0 + 100.0 + 8.0)
+    final openOffsetY = 208.0 + _index * (8.0 + 100.0 + 8.0)
         - listOffsetY;
 
     final imageSize = closeSize + (openSize - closeSize) * menuController.percentOpen;
@@ -218,7 +208,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
           menuController.toggle();
         },
         child: Image(
-          image: imageProvider,
+          image: _imageProvider,
           fit: BoxFit.cover,
           width: imageSize,
           height: imageSize,

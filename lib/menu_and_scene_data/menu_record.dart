@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:kidspend3/scaffold/zoom_scaffold.dart';
 import 'package:meta/meta.dart';
 
 class SceneData {
@@ -27,37 +26,30 @@ class SceneList {
 typedef void HeaderExpansionChangeListener(double percentHeaderExpanded);
 
 class Screen {
-//  final String title;
-//  final AssetImage backgroundImage;
   final WidgetBuilder contentBuilder;
 
   Screen({
-//    this.title,
-//    this.backgroundImage,
     this.contentBuilder,
   });
 }
 
 class MenuItem {
-  // id is needed in _MenuScreenState.createMenuItems to check if the
-  // menu item is the selected one.  Must be equal to the menuItems.key
-//  final String id;
   // Needed to locate the leadingImage in the menu list
   final int menuIndex;
   final String title;
   final ImageProvider imageProvider;
-//  final SceneList sceneList;
-  final Screen contentScreen;   // deprecated
+  final WidgetBuilder screenBuilder;
+
+//  final Screen contentScreen;   // deprecated
 
   // The expansion-change listener is set to the ZoomScaffoldState and
   // is called by the DisappearingSpaceBarTitleState.
-  HeaderExpansionChangeListener headerExpansionChangeListener;
+//  HeaderExpansionChangeListener headerExpansionChangeListener;
 
   MenuItem({
     this.title,
     this.menuIndex,
     this.imageProvider,
-    this.contentScreen,
-//    this.sceneList,
+    this.screenBuilder,
   });
 }
