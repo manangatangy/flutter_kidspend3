@@ -33,18 +33,30 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   Curve slideOutCurve = Interval(0.0, 0.7, curve: Curves.easeOut);
   Curve slideInCurve = Interval(0.0, 1.0, curve: Curves.easeOut);
 
+  // when header is fully collapsed then halo is fully hidden.
+  // when header is fully expanded (and if menu is closed) then
+  // halo is fully visible.
+  double _percentHeaderExpanded;
+
   @override
   void initState() {
     super.initState();
     menuController = MenuController(
       vsync: this,
-    )
-      ..addListener(() => setState(() {}));
+    )..addListener(() => setState(() {}));
+
+//    widget.contentScreen.headerExpansionChangeListener = (double percentHeaderExpanded) {
+//      setState(() {
+//        _percentHeaderExpanded = percentHeaderExpanded;
+//        print('_ZoomScaffoldState, _percentHeaderExpanded: $_percentHeaderExpanded');
+//      });
+//    };
   }
 
   @override
   void dispose() {
     menuController.dispose();   // deregister the listeners
+//    widget.contentScreen.headerExpansionChangeListener = null;
     super.dispose();
   }
 

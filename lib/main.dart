@@ -93,6 +93,7 @@ Map<String, MenuItem> _menuItems = {
   ),
 };
 
+
 class MyHomePage extends StatefulWidget {
 
   MyHomePage({Key key, this.title}) : super(key: key);
@@ -129,3 +130,10 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+// options for state access
+// https://stackoverflow.com/questions/46057353/controlling-state-from-outside-of-a-statefulwidget/51460832#51460832
+// https://stackoverflow.com/questions/52651986/flutter-use-notification-to-message-other-widgets
+// https://stackoverflow.com/questions/50733840/trigger-a-function-from-a-widget-to-a-state-object/50739019#50739019
+// https://stackoverflow.com/questions/50430273/how-to-set-state-from-another-widget/50430389#50430389
+// https://docs.flutter.io/flutter/foundation/ValueListenable-class.html

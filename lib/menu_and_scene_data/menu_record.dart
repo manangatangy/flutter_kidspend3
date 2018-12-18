@@ -24,6 +24,8 @@ class SceneList {
   });
 }
 
+typedef void HeaderExpansionChangeListener(double percentHeaderExpanded);
+
 class Screen {
 //  final String title;
 //  final AssetImage backgroundImage;
@@ -46,6 +48,10 @@ class MenuItem {
   final ImageProvider imageProvider;
 //  final SceneList sceneList;
   final Screen contentScreen;   // deprecated
+
+  // The expansion-change listener is set to the ZoomScaffoldState and
+  // is called by the DisappearingSpaceBarTitleState.
+  HeaderExpansionChangeListener headerExpansionChangeListener;
 
   MenuItem({
     this.title,
