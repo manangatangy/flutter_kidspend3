@@ -128,7 +128,7 @@ class MenuListItem extends StatelessWidget {
         // Put the menu item in a full width contained so that the full width is clickable
         // The width was previously double.infinity, however this conflicted with having a
         // parent Row for holding the selection-indicator, so reset with to screen width.
-        width: screenWidth - 5.0,
+        width: screenWidth - 10.0,
         child: Row(
           children: [
             Padding(
