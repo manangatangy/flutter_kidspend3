@@ -25,8 +25,8 @@ class PrimaryListPage extends StatelessWidget {
             // and be used in both expanded and collapsed state. However,
             // if transparent is specified, the collapsed toolbar will
             // ignore this and use a kind of grey color.  The expanded
-            // color is, however transparent.
-            backgroundColor: Colors.orangeAccent,
+            // color would be, however transparent.
+
             // Setting floating to true causes header to re-expand
             // when you scroll down, even if you haven’t reached
             // the top of the list.  If you add both the snap parameter
@@ -35,14 +35,14 @@ class PrimaryListPage extends StatelessWidget {
             floating: false,
             pinned: true,
             automaticallyImplyLeading: false,
-            expandedHeight: 570.0,
+            expandedHeight: 550.0,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
               title: DisappearingSpaceBarTitle(
                 child: Text(
                   'List of Items',
                   style: TextStyle(
-                    color: Colors.white,
+                    // This style correctly uses a dark text
                     fontSize: 18.0,
                   ),
                 ),
@@ -55,7 +55,7 @@ class PrimaryListPage extends StatelessWidget {
                 // color will appear in expanded state.
                 color: Theme
                     .of(context)
-                    .canvasColor,
+                    .scaffoldBackgroundColor,
                 child: BackgroundPageTransformer(
                   sceneList: sceneList,
                 ),

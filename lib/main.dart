@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:kidspend3/primary_list_page/primary_list_page.dart';
 import 'package:kidspend3/scaffold/menu_screen.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
@@ -12,36 +13,50 @@ main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+
+    // Ref: https://material-ui.com/style/color/ with
+    // primary: green A100
+    // secondary: green A400
+    final greenPrimaryDark = Color(0xff81ac8d);
+    final greenPrimaryMedium = Color(0xffb9f6ca);
+    final greenPrimaryLight = Color(0xffc7f7d4);
+    final greenSecondaryDark = Color(0xff00a152);
+    final greenSecondaryMedium = Color(0xff00e676);
+    final greenSecondaryLight = Color(0xff33eb91);
+
+    // Ref: https://stackoverflow.com/a/51269484/1402287
+    // This sets the status bar color.
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark.copyWith(
+      statusBarColor: greenPrimaryDark,
+    ));
+
     return MaterialApp(
       title: 'My App',
       theme: ThemeData(
-        // from https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=9C27B0
-//        primaryColor: Colors.purple[500],
-//        primaryColorLight: Colors.purple[200],
-//        primaryColorDark: Colors.purple[700],
-
-        // cyan.2
-        // from https://material.io/tools/color/#!/?view.left=0&view.right=0&primary.color=B2EBF2
-//        primaryColor: Colors.cyan[100],
-//        primaryColorLight: Color(0xffe5ffff),
-//        primaryColorDark: Color(0xff81b9bf),
-
-        primaryColor: Color(0xff80deea),
-        primaryColorLight: Color(0xffb4ffff),
-        primaryColorDark: Color(0xff4bacb8),
+        primaryColorBrightness: Brightness.light,
+        primaryColorDark: greenPrimaryDark,
+        primaryColor: greenPrimaryMedium,
+        primaryColorLight: greenPrimaryLight,
+        accentColor: greenSecondaryMedium,
+        accentColorBrightness: Brightness.light,
       ),
-      home: MyHomePage(),
 
-//      home: PrimaryListPage(
-//        sceneList: russianSceneList,
-//      ),
+      // To reserve space for the status bar, we can wrap the app in a
+      // SafeArea, or wrap it in a Scaffold, with an empty appBar property;
+      // Ref: https://github.com/flutter/flutter/issues/4518#issuecomment-424298638
+      // and: https://github.com/flutter/flutter/issues/4518#issuecomment-393816831
+      // Note however that simply wrapping the child in a SafeAre as described in
+      // https://github.com/flutter/flutter/issues/4518#issuecomment-397117406
+      // leaves the status bar black (although it did reserve space for it).
+      home: SafeArea(
+        child: MyHomePage(),
+      ),
     );
   }
 }
 
 Map<String, MenuItem> _menuItems = {
   'person-key-0': MenuItem(
-//    id: 'person-key-0',
     menuIndex: 0,
     title: 'Person 0',
     imageProvider: AssetImage("assets/face1-trans.png"),
@@ -52,7 +67,6 @@ Map<String, MenuItem> _menuItems = {
     ),
   ),
   'person-key-1': MenuItem(
-//    id: 'person-key-1',
     menuIndex: 1,
     title: 'Person 1',
     imageProvider: AssetImage("assets/face2-trans.png"),
@@ -63,7 +77,6 @@ Map<String, MenuItem> _menuItems = {
     ),
   ),
   'person-key-2': MenuItem(
-//    id: 'person-key-2',
     menuIndex: 2,
     title: 'Person 2',
     imageProvider: AssetImage("assets/face3-trans.png"),
@@ -73,7 +86,6 @@ Map<String, MenuItem> _menuItems = {
       ),
     ),
   ),
-
 };
 
 class MyHomePage extends StatefulWidget {
@@ -87,24 +99,13 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-//  MenuItem findById(String id) =>
-//      menuItems.firstWhere(
-//              (MenuItem menuItem) => (menuItem.id == id)
-//      );
-//
   // Initially selected menu item.
   String _selectedMenuItemKey = 'person-key-0';
 
   @override
   Widget build(BuildContext context) {
-    MenuItem _selectedMenuItem = _menuItems[_selectedMenuItemKey];
 
-//    List<MapEntry<String, MenuItem>> entries = menuItems.entries.toList();
-//    List<Container> widgets = Iterable.generate(
-//      menuItems.length,
-//          (int index) => Container(
-//
-//          )).toList();
+    MenuItem _selectedMenuItem = _menuItems[_selectedMenuItemKey];
 
     return ZoomScaffold(
       contentScreen: _selectedMenuItem.contentScreen,
