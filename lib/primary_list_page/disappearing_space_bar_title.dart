@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kidspend3/scaffold/zoom_image.dart';
 
 /// The [title] property of the [FlexibleSpaceBar] appears in both the
 /// expanded and collapsed state.  This widget can be used as the [title]
@@ -34,6 +35,8 @@ class DisappearingSpaceBarTitleState extends State<DisappearingSpaceBarTitle> {
     // 0.0 -> Expanded
     // 1.0 -> Collapsed to toolbar
     final double t = (1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent).clamp(0.0, 1.0);
+
+    HeaderChangeNotification(collapsedFraction: t)..dispatch(context);
 
     final double fadeStart = max(0.0, 1.0 - kToolbarHeight / deltaExtent);
     const double fadeEnd = 1.0;

@@ -36,7 +36,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // when header is fully collapsed then halo is fully hidden.
   // when header is fully expanded (and if menu is closed) then
   // halo is fully visible.
-  double _percentHeaderExpanded;
+  double _collapsedFraction;
 
   @override
   void initState() {
@@ -60,10 +60,27 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     super.dispose();
   }
 
-  createLeadingIcon() {
-    return spinZoomAndSlideLeadingImage(
-      widget.leadingImageProvider,
-      widget.leadingImageListIndex,
+  @override
+  Widget build(BuildContext context) {
+    // This essentially build the entire scaffold.
+    // It is all assembled under a ZoomScaffoldMenuController, which says
+    // find me a MenuController from under the state widget, and pass it into
+    // the builder function, which will then pass it on to the menu screen,
+    // which now needs to be a builder also.
+
+    // Need a material to prevent yellow underlined content
+    // https://stackoverflow.com/a/49967268/1402287
+    return ZoomScaffoldMenuController(
+      builder: (BuildContext context, MenuController menuController) => Material(
+        type: MaterialType.transparency,
+        child: Stack(
+          children: [
+            widget.menuScreenBuilder(context, menuController),
+            createContentDisplay(),
+            createLeadingIcon(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -72,6 +89,13 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
         Container(
           child: widget.contentScreen.contentBuilder(context),
         )
+    );
+  }
+
+  createLeadingIcon() {
+    return spinZoomAndSlideLeadingImage(
+      widget.leadingImageProvider,
+      widget.leadingImageListIndex,
     );
   }
 
@@ -175,29 +199,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     ) : Container();
   }
 
-  @override
-  Widget build(BuildContext context) {
-    // This essentially build the entire scaffold.
-    // It is all assembled under a ZoomScaffoldMenuController, which says
-    // find me a MenuController from under the state widget, and pass it into
-    // the builder function, which will then pass it on to the menu screen,
-    // which now needs to be a builder also.
-
-    // Need a material to prevent yellow underlined content
-    // https://stackoverflow.com/a/49967268/1402287
-    return ZoomScaffoldMenuController(
-      builder: (BuildContext context, MenuController menuController) => Material(
-        type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            widget.menuScreenBuilder(context, menuController),
-            createContentDisplay(),
-            createLeadingIcon(),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 // This class allows the MenuScreen to 'know'it's in the ZoomScaffold
