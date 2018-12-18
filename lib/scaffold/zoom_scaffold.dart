@@ -93,10 +93,30 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   createContentDisplay() {
-    return zoomAndSlideContent(
-        Container(
-          child: widget.contentScreen.contentBuilder(context),
-        )
+    // Halo/circle  under leadingImage should only be shown when menu closed.
+    final bool showHalo = menuController.state == MenuState.closed;
+    final halo = showHalo ? Container(
+      width: 20.0,
+      height: 20.0,
+      color: Colors.pink,
+    ) : Container(
+      width: 20.0,
+      height: 20.0,
+      color: Colors.transparent,
+    );
+    return Stack(
+      children: <Widget>[
+        zoomAndSlideContent(
+            Container(
+              child: widget.contentScreen.contentBuilder(context),
+            )
+        ),
+        Positioned(
+          top: 4.0,
+          left: 10.0,
+          child: halo,
+        ),
+      ],
     );
   }
 

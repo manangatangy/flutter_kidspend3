@@ -10,3 +10,6 @@ class HeaderChangeNotification extends Notification {
     this.collapsedFraction,
   });
 }
+
+// https://stackoverflow.com/questions/53483048/unhandled-exception-in-futurebuilder-flutter
+
