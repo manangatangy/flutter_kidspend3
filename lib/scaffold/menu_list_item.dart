@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kidspend3/main.dart';
-import 'package:kidspend3/page_transformer/page_transformer_item.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
-import 'package:kidspend3/menu_and_scene_data/scenes-1.dart';
 
 // Now lets wrap each list item in an animator
 // Change 'extends StatefulWidget' to ImplicitlyAnimatedWidget and

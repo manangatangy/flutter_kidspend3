@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
+import 'package:kidspend3/scaffold/zoom_image.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final ImageProvider leadingImageProvider;
@@ -70,15 +71,22 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     // Need a material to prevent yellow underlined content
     // https://stackoverflow.com/a/49967268/1402287
-    return ZoomScaffoldMenuController(
-      builder: (BuildContext context, MenuController menuController) => Material(
-        type: MaterialType.transparency,
-        child: Stack(
-          children: [
-            widget.menuScreenBuilder(context, menuController),
-            createContentDisplay(),
-            createLeadingIcon(),
-          ],
+    return NotificationListener<HeaderChangeNotification>(
+      onNotification: (HeaderChangeNotification headerChangeNotification) {
+        _collapsedFraction = headerChangeNotification.collapsedFraction;
+        print('onHeaderChangeNotification collapsedFraction: $_collapsedFraction');
+        return true;
+      },
+      child: ZoomScaffoldMenuController(
+        builder: (BuildContext context, MenuController menuController) => Material(
+          type: MaterialType.transparency,
+          child: Stack(
+            children: [
+              widget.menuScreenBuilder(context, menuController),
+              createContentDisplay(),
+              createLeadingIcon(),
+            ],
+          ),
         ),
       ),
     );
