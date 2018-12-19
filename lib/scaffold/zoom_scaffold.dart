@@ -30,10 +30,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   Curve slideOutCurve = Interval(0.0, 0.7, curve: Curves.easeOut);
   Curve slideInCurve = Interval(0.0, 1.0, curve: Curves.easeOut);
 
-  // when header is fully collapsed then halo is fully hidden.
-  // when header is fully expanded (and if menu is closed) then
-  // halo is fully visible.
-  double _collapsedFraction;
+  // This property is updated by ToolbarOpacityChangeNotifications dispatched by
+  // the DisappearingSpaceBarTitleState, in response to the user expanding or
+  // collapsing th SliverAppBar.
+  double _toolbarOpacity = 0.5;
 
   @override
   void initState() {
@@ -57,25 +57,33 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     // the builder function, which will then pass it on to the menu screen,
     // which now needs to be a builder also.
 
-    // Need a material to prevent yellow underlined content
-    // https://stackoverflow.com/a/49967268/1402287
-    return NotificationListener<HeaderChangeNotification>(
-      onNotification: (HeaderChangeNotification headerChangeNotification) {
-        print('onHeaderChangeNotification collapsedFraction: $_collapsedFraction');
-//        setState(() {
-//          _collapsedFraction = headerChangeNotification.collapsedFraction;
-//        });
+    return NotificationListener<ToolbarOpacityChangeNotification>(
+      onNotification: (ToolbarOpacityChangeNotification notification) {
+        _toolbarOpacity = notification.toolbarOpacity;
+        print('onToolbarOpacityChangeNotification _toolbarOpacity: $_toolbarOpacity');
         return true;
       },
-      child: ZoomScaffoldMenuController(
-        builder: (BuildContext context, MenuController menuController) => Material(
-          type: MaterialType.transparency,
-          child: Stack(
-            children: [
-              widget.menuScreenBuilder(context, menuController),
-              createContentDisplay(),
-              createLeadingIcon(),
-            ],
+      // This listener is necessary because the ScrollNotification doesn't
+      // seem to be dispatched further up the tree than the parent of the
+      // CustomScrollView.
+      child: NotificationListener<ExtendedScrollNotification>(
+        onNotification: (ExtendedScrollNotification notification) {
+          print('onExtendedScrollNotification');
+          setState(() {});
+          return true;
+        },
+        child: ZoomScaffoldMenuController(
+          // Need a material to prevent yellow underlined content
+          // https://stackoverflow.com/a/49967268/1402287
+          builder: (BuildContext context, MenuController menuController) => Material(
+            type: MaterialType.transparency,
+            child: Stack(
+              children: [
+                widget.menuScreenBuilder(context, menuController),
+                createContentDisplay(),
+                createLeadingIcon(),
+              ],
+            ),
           ),
         ),
       ),

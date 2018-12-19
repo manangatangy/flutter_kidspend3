@@ -25,11 +25,11 @@ SliverStickyHeader makeListWithStickHeader(
     sliver: SliverList(
       delegate: SliverChildBuilderDelegate((context, i) =>
           ListTile(
-          leading: CircleAvatar(
-            child: Text('0'),
+            leading: CircleAvatar(
+              child: Text('0'),
+            ),
+            title: Text('List tile #$i'),
           ),
-          title: Text('List tile #$i'),
-        ),
         childCount: count,
       ),
     ),

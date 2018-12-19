@@ -1,15 +1,13 @@
-
-
 import 'package:flutter/cupertino.dart';
 
-class HeaderChangeNotification extends Notification {
-
-  final double collapsedFraction;
-
-  HeaderChangeNotification({
-    this.collapsedFraction,
+/// Notifies when there has been a change in the expansion or
+/// collapsion[!] of the FlexibleSpace in the SliverAppBar
+class ToolbarOpacityChangeNotification extends Notification {
+  final double toolbarOpacity;
+  ToolbarOpacityChangeNotification({
+    this.toolbarOpacity,
   });
 }
 
-// https://stackoverflow.com/questions/53483048/unhandled-exception-in-futurebuilder-flutter
-
+class ExtendedScrollNotification extends Notification {
+}

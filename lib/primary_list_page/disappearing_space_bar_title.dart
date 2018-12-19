@@ -36,8 +36,6 @@ class DisappearingSpaceBarTitleState extends State<DisappearingSpaceBarTitle> {
     // 1.0 -> Collapsed to toolbar
     final double t = (1.0 - (settings.currentExtent - settings.minExtent) / deltaExtent).clamp(0.0, 1.0);
 
-    HeaderChangeNotification(collapsedFraction: t)..dispatch(context);
-
     final double fadeStart = max(0.0, 1.0 - kToolbarHeight / deltaExtent);
     const double fadeEnd = 1.0;
     assert(fadeStart <= fadeEnd);
@@ -48,6 +46,9 @@ class DisappearingSpaceBarTitleState extends State<DisappearingSpaceBarTitle> {
 //        begin: Colors.black,
 //        end: Colors.blue,
 //    ).transform(t);
+    ToolbarOpacityChangeNotification(
+      toolbarOpacity: opacity,
+    )..dispatch(context);
 
     return Opacity(
         opacity: opacity,
