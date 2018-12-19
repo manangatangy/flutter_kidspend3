@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kidspend3/scaffold/zoom_image.dart';
 
 /// The [title] property of the [FlexibleSpaceBar] appears in both the
 /// expanded and collapsed state.  This widget can be used as the [title]
@@ -55,4 +54,14 @@ class DisappearingSpaceBarTitleState extends State<DisappearingSpaceBarTitle> {
         child: widget.child,
     );
   }
+}
+
+class ToolbarOpacityChangeNotification extends Notification {
+  final double toolbarOpacity;
+  ToolbarOpacityChangeNotification({
+    this.toolbarOpacity,
+  });
+}
+
+class ExtendedScrollNotification extends Notification {
 }

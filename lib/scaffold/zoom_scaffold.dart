@@ -2,7 +2,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:kidspend3/main.dart';
 import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
+import 'package:kidspend3/primary_list_page/disappearing_space_bar_title.dart';
 import 'package:kidspend3/scaffold/zoom_image.dart';
 
 class ZoomScaffold extends StatefulWidget {
@@ -20,8 +22,6 @@ class ZoomScaffold extends StatefulWidget {
 
 class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMixin {
 
-  bool isClosed = false;
-
   MenuController menuController;
   // Use non-linear curves, with the down curve making all
   // the change before 0.3
@@ -33,7 +33,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // This property is updated by ToolbarOpacityChangeNotifications dispatched by
   // the DisappearingSpaceBarTitleState, in response to the user expanding or
   // collapsing th SliverAppBar.
-  double _toolbarOpacity = 0.5;
+  double _toolbarOpacity = 0.0;
 
   @override
   void initState() {
@@ -60,7 +60,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     return NotificationListener<ToolbarOpacityChangeNotification>(
       onNotification: (ToolbarOpacityChangeNotification notification) {
         _toolbarOpacity = notification.toolbarOpacity;
-        print('onToolbarOpacityChangeNotification _toolbarOpacity: $_toolbarOpacity');
         return true;
       },
       // This listener is necessary because the ScrollNotification doesn't
@@ -68,7 +67,6 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
       // CustomScrollView.
       child: NotificationListener<ExtendedScrollNotification>(
         onNotification: (ExtendedScrollNotification notification) {
-          print('onExtendedScrollNotification');
           setState(() {});
           return true;
         },
@@ -81,6 +79,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
               children: [
                 widget.menuScreenBuilder(context, menuController),
                 createContentDisplay(),
+                createHalo(),
                 createLeadingIcon(),
               ],
             ),
@@ -91,31 +90,34 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   }
 
   createContentDisplay() {
-    // Halo/circle  under leadingImage should only be shown when menu closed.
-    final bool showHalo = menuController.state == MenuState.closed;
-    final halo = showHalo ? Container(
-      width: 20.0,
-      height: 20.0,
-      color: Colors.pink,
-    ) : Container(
-      width: 20.0,
-      height: 20.0,
-      color: Colors.transparent,
+    return zoomAndSlideContent(
+        Container(
+          child: widget.currentMenuItem.screenBuilder(context),
+        )
     );
-    return Stack(
-      children: <Widget>[
-        zoomAndSlideContent(
-            Container(
-              child: widget.currentMenuItem.screenBuilder(context),
-            )
+  }
+
+  createHalo() {
+    // Halo/circle under leadingImage should only be shown when menu closed.
+    // However, since the halo has the same color as the menu screen background,
+    // it may not be noticeable, even if showHalo is always true.
+    final bool hideHalo = menuController.state != MenuState.closed;
+    final halo = Positioned(
+      top: 4.0,
+      left: 7.0,
+      child: Opacity(
+        opacity: hideHalo ? 0.0 : (1.0 - _toolbarOpacity),
+        child: Container(
+          height: 50.0,
+          width: 50.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            color: greenSecondaryLight,
+          ),
         ),
-        Positioned(
-          top: 4.0,
-          left: 10.0,
-          child: halo,
-        ),
-      ],
+      ),
     );
+    return halo;
   }
 
   createLeadingIcon() {
@@ -183,12 +185,12 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     // The origin here is from below the system status bar.
     // This is the same as the origin of the main list
     // Spins and slides downwards when opening menu
-    final closeSize = 50.0;
+    final closeSize = 44.0;
     final openSize = 100.0;       // from menu_screen.dart:123
 
     final closeOffsetX = 10.0;    // Position in the app-bar
     final openOffsetX = 25.0;     // from menu_screen.dart
-    final closeOffsetY = 4.0;     // Position in the app-bar
+    final closeOffsetY = 7.0;     // Position in the app-bar
     // The 8.0 values are the padding top and bottom of list items
     final openOffsetY = 208.0 + _index * (8.0 + 100.0 + 8.0)
         - listOffsetY;
