@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:kidspend3/main.dart';
 import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 import 'package:kidspend3/primary_list_page/disappearing_space_bar_title.dart';
-import 'package:kidspend3/scaffold/zoom_image.dart';
 
 class ZoomScaffold extends StatefulWidget {
   final MenuItem currentMenuItem;
