@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:kidspend3/demo.dart';
+import 'package:kidspend3/menu_and_scene_data/scenes-3.dart';
 import 'package:kidspend3/primary_list_page/primary_list_page.dart';
 import 'package:kidspend3/scaffold/menu_screen.dart';
 import 'package:kidspend3/scaffold/zoom_scaffold.dart';
@@ -83,7 +84,7 @@ Map<String, MenuItem> _menuItems = {
     title: 'Person 2',
     imageProvider: AssetImage("assets/face3-trans.png"),
     screenBuilder: (BuildContext context) => PrimaryListPage(
-        sceneList: deruedaSceneList,
+        sceneList: mirebsSceneList,
     ),
   ),
 };

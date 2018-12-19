@@ -76,6 +76,13 @@ flutter:
     - assets/face1-trans.png
     - assets/face2-trans.png
     - assets/face3-trans.png
+    # under assets/scenes-3
+    - assets/buran-0.jpg
+    - assets/buran-1.jpg
+    - assets/buran-2.jpg
+    - assets/buran-3.jpg
+    - assets/buran-4.jpg
+    - assets/buran-5.jpg
 
   fonts:
      - family: mermaid
