@@ -14,37 +14,26 @@ class SceneData {
 }
 
 class SceneList {
+  String tag;
   int currentScene;
   final List<SceneData> scenes;
 
   SceneList({
+    this.tag,
     this.currentScene = 0,
     @required this.scenes,
   });
 }
 
-typedef void HeaderExpansionChangeListener(double percentHeaderExpanded);
-
-class Screen {
-  final WidgetBuilder contentBuilder;
-
-  Screen({
-    this.contentBuilder,
-  });
-}
+typedef Widget ScreenBuilder(BuildContext context,
+    ScrollController scrollController,);
 
 class MenuItem {
   // Needed to locate the leadingImage in the menu list
   final int menuIndex;
   final String title;
   final ImageProvider imageProvider;
-  final WidgetBuilder screenBuilder;
-
-//  final Screen contentScreen;   // deprecated
-
-  // The expansion-change listener is set to the ZoomScaffoldState and
-  // is called by the DisappearingSpaceBarTitleState.
-//  HeaderExpansionChangeListener headerExpansionChangeListener;
+  final ScreenBuilder screenBuilder;
 
   MenuItem({
     this.title,

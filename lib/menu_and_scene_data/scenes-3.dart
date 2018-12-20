@@ -2,7 +2,10 @@ import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 
 // Ref: https://ralphmirebs.livejournal.com/219949.html
 
-final mirebsSceneList = SceneList(currentScene: 0, scenes: <SceneData>[
+final mirebsSceneList = SceneList(
+  tag: 'mirebs',
+    currentScene: 0,
+    scenes: <SceneData>[
   SceneData(
     title: 'Buran 0',
     translation: 'Ralph Mirebs',

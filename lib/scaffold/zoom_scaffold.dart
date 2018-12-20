@@ -22,6 +22,7 @@ class ZoomScaffold extends StatefulWidget {
 class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMixin {
 
   MenuController menuController;
+  ScrollController scrollController;
   // Use non-linear curves, with the down curve making all
   // the change before 0.3
   Curve scaleDownCurve = Interval(0.0, 0.3, curve: Curves.easeOut);
@@ -32,7 +33,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // This property is updated by ToolbarOpacityChangeNotifications dispatched by
   // the DisappearingSpaceBarTitleState, in response to the user expanding or
   // collapsing th SliverAppBar.
-  final toolbarOpacity = ValueNotifier(0.0);
+  double _toolbarOpacity = 0.0;
   // ref: https://stackoverflow.com/a/50430389/1402287
 
   @override
@@ -41,10 +42,12 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     menuController = MenuController(
       vsync: this,
     )..addListener(() => setState(() {}));
+    scrollController = ScrollController()..addListener(() => setState(() {}));
   }
 
   @override
   void dispose() {
+    scrollController.dispose();
     menuController.dispose();   // deregister the listeners
     super.dispose();
   }
@@ -59,30 +62,21 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     return NotificationListener<ToolbarOpacityChangeNotification>(
       onNotification: (ToolbarOpacityChangeNotification notification) {
-        toolbarOpacity.value = notification.toolbarOpacity;
+        _toolbarOpacity = notification.toolbarOpacity;
         return true;
       },
-      // This listener is necessary because the ScrollNotification doesn't
-      // seem to be dispatched further up the tree than the parent of the
-      // CustomScrollView.
-      child: NotificationListener<ExtendedScrollNotification>(
-        onNotification: (ExtendedScrollNotification notification) {
-          setState(() {});
-          return true;
-        },
-        child: ZoomScaffoldMenuController(
-          // Need a material to prevent yellow underlined content
-          // https://stackoverflow.com/a/49967268/1402287
-          builder: (BuildContext context, MenuController menuController) => Material(
-            type: MaterialType.transparency,
-            child: Stack(
-              children: [
-                widget.menuScreenBuilder(context, menuController),
-                createContentDisplay(),
-                createHalo(),
-                createLeadingIcon(),
-              ],
-            ),
+      child: ZoomScaffoldMenuController(
+        // Need a material to prevent yellow underlined content
+        // https://stackoverflow.com/a/49967268/1402287
+        builder: (BuildContext context, MenuController menuController) => Material(
+          type: MaterialType.transparency,
+          child: Stack(
+            children: [
+              widget.menuScreenBuilder(context, menuController),
+              createContentDisplay(),
+              createHalo(),
+              createLeadingIcon(),
+            ],
           ),
         ),
       ),
@@ -92,7 +86,10 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   createContentDisplay() {
     return zoomAndSlideContent(
         Container(
-          child: widget.currentMenuItem.screenBuilder(context),
+          child: widget.currentMenuItem.screenBuilder(
+            context,
+            scrollController,
+          ),
         )
     );
   }
@@ -105,17 +102,14 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final halo = Positioned(
       top: 4.0,
       left: 7.0,
-      child: ValueListenableBuilder<double>(
-        valueListenable: toolbarOpacity,
-        builder: (context, value, child) => Opacity(
-          opacity: hideHalo ? 0.0 : (1.0 - value),
-          child: Container(
-            height: 50.0,
-            width: 50.0,
-            decoration: new BoxDecoration(
-              shape: BoxShape.circle,
-              color: greenSecondaryLight,
-            ),
+      child: Opacity(
+        opacity: hideHalo ? 0.0 : (1.0 - _toolbarOpacity),
+        child: Container(
+          height: 50.0,
+          width: 50.0,
+          decoration: new BoxDecoration(
+            shape: BoxShape.circle,
+            color: greenSecondaryLight,
           ),
         ),
       ),

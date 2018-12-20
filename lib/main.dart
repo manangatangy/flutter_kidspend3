@@ -67,25 +67,31 @@ Map<String, MenuItem> _menuItems = {
     menuIndex: 0,
     title: 'Person 0',
     imageProvider: AssetImage("assets/face1-trans.png"),
-    screenBuilder: (BuildContext context) => PrimaryListPage(
-        sceneList: russianSceneList,
-    ),
+    screenBuilder: (BuildContext context, ScrollController scrollController) =>
+        PrimaryListPage(
+          scrollController: scrollController,
+          sceneList: russianSceneList,
+        ),
   ),
   'person-key-1': MenuItem(
     menuIndex: 1,
     title: 'Person 1',
     imageProvider: AssetImage("assets/face2-trans.png"),
-    screenBuilder: (BuildContext context) => PrimaryListPage(
-        sceneList: deruedaSceneList,
-      ),
+    screenBuilder: (BuildContext context, ScrollController scrollController) =>
+        PrimaryListPage(
+          scrollController: scrollController,
+          sceneList: deruedaSceneList,
+        ),
   ),
   'person-key-2': MenuItem(
     menuIndex: 2,
     title: 'Person 2',
     imageProvider: AssetImage("assets/face3-trans.png"),
-    screenBuilder: (BuildContext context) => PrimaryListPage(
-        sceneList: mirebsSceneList,
-    ),
+    screenBuilder: (BuildContext context, ScrollController scrollController) =>
+        PrimaryListPage(
+          scrollController: scrollController,
+          sceneList: mirebsSceneList,
+        ),
   ),
 };
 

@@ -3,6 +3,7 @@ import 'package:kidspend3/menu_and_scene_data/menu_record.dart';
 // ref: https://www.davidderueda.com/explore/
 
 final deruedaSceneList = SceneList(
+  tag: 'derueda',
   currentScene: 0,
   scenes: <SceneData>[
     SceneData(
