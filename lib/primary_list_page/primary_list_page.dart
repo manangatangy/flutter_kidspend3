@@ -21,6 +21,7 @@ class PrimaryListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: CustomScrollView(
+        key: PageStorageKey<String>(sceneList.tag + '-1'),
         controller: scrollController,
         slivers: <Widget>[
           SliverAppBar(
@@ -109,18 +110,13 @@ class BackgroundPageTransformer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('building page: ${sceneList.currentScene} in scenelist: ${sceneList.tag}');
     return PageTransformer(
       pageViewBuilder: (context, visibilityResolver) {
         return PageView.builder(
+          key: PageStorageKey<String>(sceneList.tag + '-2'),
           controller: PageController(
             viewportFraction: 0.85,
-            initialPage: sceneList.currentScene,
           ),
-          onPageChanged: (int page) {
-            sceneList.currentScene = page;
-            print('saved page: ${sceneList.currentScene} in scenelist: ${sceneList.tag}');
-          },
           itemCount: sceneList.scenes.length,
           itemBuilder: (context, index) {
             final vis = visibilityResolver.resolvePageVisibility(index);

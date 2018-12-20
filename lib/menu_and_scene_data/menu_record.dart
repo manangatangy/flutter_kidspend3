@@ -15,12 +15,10 @@ class SceneData {
 
 class SceneList {
   String tag;
-  int currentScene;
   final List<SceneData> scenes;
 
   SceneList({
     this.tag,
-    this.currentScene = 0,
     @required this.scenes,
   });
 }
