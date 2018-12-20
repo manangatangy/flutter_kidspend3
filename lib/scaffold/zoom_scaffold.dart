@@ -32,7 +32,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // This property is updated by ToolbarOpacityChangeNotifications dispatched by
   // the DisappearingSpaceBarTitleState, in response to the user expanding or
   // collapsing th SliverAppBar.
-  double _toolbarOpacity = 0.0;
+  final toolbarOpacity = ValueNotifier(0.0);
 
   @override
   void initState() {
@@ -58,7 +58,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     return NotificationListener<ToolbarOpacityChangeNotification>(
       onNotification: (ToolbarOpacityChangeNotification notification) {
-        _toolbarOpacity = notification.toolbarOpacity;
+        toolbarOpacity.value = notification.toolbarOpacity;
         return true;
       },
       // This listener is necessary because the ScrollNotification doesn't
@@ -104,14 +104,17 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
     final halo = Positioned(
       top: 4.0,
       left: 7.0,
-      child: Opacity(
-        opacity: hideHalo ? 0.0 : (1.0 - _toolbarOpacity),
-        child: Container(
-          height: 50.0,
-          width: 50.0,
-          decoration: new BoxDecoration(
-            shape: BoxShape.circle,
-            color: greenSecondaryLight,
+      child: ValueListenableBuilder<double>(
+        valueListenable: toolbarOpacity,
+        builder: (context, value, child) => Opacity(
+          opacity: hideHalo ? 0.0 : (1.0 - value),
+          child: Container(
+            height: 50.0,
+            width: 50.0,
+            decoration: new BoxDecoration(
+              shape: BoxShape.circle,
+              color: greenSecondaryLight,
+            ),
           ),
         ),
       ),
