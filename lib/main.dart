@@ -128,3 +128,8 @@ class _MyHomePageState extends State<MyHomePage> {
 // https://stackoverflow.com/questions/50733840/trigger-a-function-from-a-widget-to-a-state-object/50739019#50739019
 // https://stackoverflow.com/questions/50430273/how-to-set-state-from-another-widget/50430389#50430389
 // https://docs.flutter.io/flutter/foundation/ValueListenable-class.html
+
+
+// this talks about Listenable and ValueListenableBuilder cf Stream and StreamBuilder
+// Seems like a good approach to my problem could be to use Listenable
+// ref: https://stackoverflow.com/a/50430389/1402287

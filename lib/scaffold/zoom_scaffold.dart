@@ -33,6 +33,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
   // the DisappearingSpaceBarTitleState, in response to the user expanding or
   // collapsing th SliverAppBar.
   final toolbarOpacity = ValueNotifier(0.0);
+  // ref: https://stackoverflow.com/a/50430389/1402287
 
   @override
   void initState() {
