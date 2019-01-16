@@ -8,17 +8,16 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 // ref: https://github.com/letsar/flutter_sticky_header
 // ref: https://stackoverflow.com/a/50888957/1402287
 
-SliverStickyHeader makeListWithStickyHeader(
-    String headerTitle,
+SliverStickyHeader makeListWithStickyHeader(String headerTitle,
     int itemCount) {
   Widget makeListTile(String title) =>
       ListTile(
         contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
         leading: Container(
           padding: EdgeInsets.only(right: 12.0),
-          decoration: new BoxDecoration(
-              border: new Border(
-                  right: new BorderSide(width: 1.0, color: Colors.blueGrey))),
+          decoration: BoxDecoration(
+              border: Border(
+                  right: BorderSide(width: 1.0, color: Colors.blueGrey))),
           child: Icon(Icons.autorenew, color: Colors.blueGrey),
         ),
         title: Text(
@@ -40,21 +39,14 @@ SliverStickyHeader makeListWithStickyHeader(
     ),
     sliver: SliverList(
       delegate: SliverChildBuilderDelegate((context, i) =>
-      Card(
-        elevation: 4.0,
-        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
-        child: Container(
-          decoration: BoxDecoration(color: Colors.white),
-          child: makeListTile('tile #$i'),
-        ),
-      ),
-
-//          ListTile(
-//            leading: CircleAvatar(
-//              child: Text('0'),
-//            ),
-//            title: Text('List tile #$i'),
-//          ),
+          Card(
+            elevation: 4.0,
+            margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+            child: Container(
+              decoration: BoxDecoration(color: Colors.white),
+              child: makeListTile('tile #$i'),
+            ),
+          ),
         childCount: itemCount,
       ),
     ),
