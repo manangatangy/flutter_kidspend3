@@ -89,12 +89,35 @@ SliverList(
   ),
 );
            */
-          makeListWithStickyHeader('header 1', 5),
-          makeListWithStickyHeader('header 2', 5),
-          makeListWithStickyHeader('header 3', 5),
-          makeListWithStickyHeader('header 4', 5),
-          makeListWithStickyHeader('header 5', 5),
-          makeListWithStickyHeader('header 6', 5),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, i) =>
+                Card(
+                  elevation: 4.0,
+                  margin: EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+                  child: Container(
+                    decoration: BoxDecoration(color: Colors.white),
+                    child: ListTile(
+                      contentPadding: EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 6.0),
+                      leading: Container(
+                        padding: EdgeInsets.only(right: 12.0),
+                        decoration: BoxDecoration(
+                            border: Border(
+                                right: BorderSide(
+                                    width: 1.0, color: Colors.blueGrey))),
+                        child: Icon(Icons.autorenew, color: Colors.blueGrey),
+                      ),
+                      title: Text(
+                        'tile #$i',
+                        style: TextStyle(color: Colors.blueGrey,
+                            fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ),
+              childCount: 15,
+            ),
+          ),
         ],
       ),
     );
