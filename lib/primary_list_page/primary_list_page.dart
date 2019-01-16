@@ -89,12 +89,12 @@ SliverList(
   ),
 );
            */
-          makeListWithStickHeader('header 1', 5),
-          makeListWithStickHeader('header 2', 5),
-          makeListWithStickHeader('header 3', 5),
-          makeListWithStickHeader('header 4', 5),
-          makeListWithStickHeader('header 5', 5),
-          makeListWithStickHeader('header 6', 5),
+          makeListWithStickyHeader('header 1', 5),
+          makeListWithStickyHeader('header 2', 5),
+          makeListWithStickyHeader('header 3', 5),
+          makeListWithStickyHeader('header 4', 5),
+          makeListWithStickyHeader('header 5', 5),
+          makeListWithStickyHeader('header 6', 5),
         ],
       ),
     );

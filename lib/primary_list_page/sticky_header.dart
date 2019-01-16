@@ -8,9 +8,25 @@ import 'package:flutter_sticky_header/flutter_sticky_header.dart';
 // ref: https://github.com/letsar/flutter_sticky_header
 // ref: https://stackoverflow.com/a/50888957/1402287
 
-SliverStickyHeader makeListWithStickHeader(
-    String title,
-    int count) {
+SliverStickyHeader makeListWithStickyHeader(
+    String headerTitle,
+    int itemCount) {
+  Widget makeListTile(String title) =>
+      ListTile(
+        contentPadding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
+        leading: Container(
+          padding: EdgeInsets.only(right: 12.0),
+          decoration: new BoxDecoration(
+              border: new Border(
+                  right: new BorderSide(width: 1.0, color: Colors.blueGrey))),
+          child: Icon(Icons.autorenew, color: Colors.blueGrey),
+        ),
+        title: Text(
+          title,
+          style: TextStyle(color: Colors.blueGrey, fontWeight: FontWeight.bold),
+        ),
+      );
+
   return SliverStickyHeader(
     header: Container(
       height: 60.0,
@@ -18,19 +34,28 @@ SliverStickyHeader makeListWithStickHeader(
       padding: EdgeInsets.symmetric(horizontal: 16.0),
       alignment: Alignment.centerLeft,
       child: Text(
-        title,
-        style: const TextStyle(color: Colors.white),
+        headerTitle,
+        style: const TextStyle(color: Colors.red),
       ),
     ),
     sliver: SliverList(
       delegate: SliverChildBuilderDelegate((context, i) =>
-          ListTile(
-            leading: CircleAvatar(
-              child: Text('0'),
-            ),
-            title: Text('List tile #$i'),
-          ),
-        childCount: count,
+      Card(
+        elevation: 4.0,
+        margin: new EdgeInsets.symmetric(horizontal: 10.0, vertical: 6.0),
+        child: Container(
+          decoration: BoxDecoration(color: Colors.white),
+          child: makeListTile('tile #$i'),
+        ),
+      ),
+
+//          ListTile(
+//            leading: CircleAvatar(
+//              child: Text('0'),
+//            ),
+//            title: Text('List tile #$i'),
+//          ),
+        childCount: itemCount,
       ),
     ),
   );
