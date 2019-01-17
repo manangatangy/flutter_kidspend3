@@ -196,7 +196,7 @@ class _ZoomScaffoldState extends State<ZoomScaffold> with TickerProviderStateMix
 
     final slideAmountX = closeOffsetX + (openOffsetX - closeOffsetX) * menuController.percentOpen;
     final slideAmountY = closeOffsetY + (openOffsetY - closeOffsetY) * menuController.percentOpen;
-    final spinAngle = 2 * pi * menuController.percentOpen;
+    final spinAngle = 4 * pi * menuController.percentOpen;
 
     // When closed, use un-transformed content.
     // When open, widget is effectively gone
